@@ -13,118 +13,108 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #2d5a27 0%, #4a7c59 50%, #6b9b37 100%);
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: white;
-            overflow: hidden;
-            position: relative;
+            padding: 20px;
         }
 
-        .success-bg {
+        .background-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 30% 20%, rgba(34, 197, 94, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 70% 80%, rgba(16, 185, 129, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(34, 197, 94, 0.1) 0%, transparent 70%);
-            animation: successPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes successPulse {
-            0%, 100% { opacity: 0.8; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.02); }
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
         }
 
         .container {
             position: relative;
             z-index: 1;
-            text-align: center;
-            background: rgba(255, 255, 255, 0.1);
+            max-width: 500px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border-radius: 32px;
-            padding: 60px;
-            box-shadow: 
-                0 30px 60px rgba(0, 0, 0, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            max-width: 600px;
-            width: 90%;
-            animation: celebrationEntrance 1.2s ease-out;
+            padding: 48px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.8s ease-out;
+            text-align: center;
         }
 
-        @keyframes celebrationEntrance {
-            0% {
+        @keyframes slideIn {
+            from {
                 opacity: 0;
-                transform: translateY(80px) scale(0.8);
+                transform: translateY(50px) scale(0.9);
             }
-            50% {
-                transform: translateY(-10px) scale(1.05);
-            }
-            100% {
+            to {
                 opacity: 1;
                 transform: translateY(0) scale(1);
             }
         }
 
         .success-icon {
-            width: 120px;
-            height: 120px;
-            margin: 0 auto 30px;
-            background: linear-gradient(45deg, #22c55e, #16a34a);
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #22c55e, #16a34a);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 60px;
-            animation: iconBounce 2s ease-in-out infinite;
-            box-shadow: 
-                0 15px 35px rgba(34, 197, 94, 0.4),
-                inset 0 5px 15px rgba(255, 255, 255, 0.2);
+            font-size: 40px;
+            animation: iconPulse 2s ease-in-out infinite;
+            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
         }
 
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.1); }
+        @keyframes iconPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
-        h1 {
+        h2 {
             font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(45deg, #ffffff, #d1fae5, #a7f3d0);
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            animation: titleGlow 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes titleGlow {
-            from { filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.3)); }
-            to { filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.6)); }
+            letter-spacing: -1px;
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            font-weight: 400;
             margin-bottom: 40px;
-            color: rgba(255, 255, 255, 0.8);
-            font-weight: 500;
         }
 
         .link-container {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            border: 2px solid rgba(34, 197, 94, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
             position: relative;
             overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .link-container:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .link-container::before {
@@ -134,7 +124,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
             animation: shimmer 3s infinite;
         }
 
@@ -144,9 +134,9 @@
         }
 
         .link-label {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 10px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -154,39 +144,41 @@
 
         .link {
             display: block;
-            font-size: 1.1rem;
-            color: #4ade80;
+            font-size: 1rem;
+            color: #667eea;
             text-decoration: none;
             word-break: break-all;
-            padding: 15px;
-            background: rgba(74, 222, 128, 0.1);
+            padding: 16px;
+            background: rgba(102, 126, 234, 0.1);
             border-radius: 12px;
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(74, 222, 128, 0.3);
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            font-family: 'Monaco', 'Menlo', monospace;
         }
 
         .link:hover {
-            background: rgba(74, 222, 128, 0.2);
-            border-color: rgba(74, 222, 128, 0.6);
+            background: rgba(102, 126, 234, 0.15);
+            border-color: rgba(102, 126, 234, 0.4);
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(74, 222, 128, 0.2);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
         }
 
         .copy-button {
-            background: linear-gradient(45deg, #16a34a, #22c55e);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 16px;
-            font-size: 16px;
+            width: 100%;
+            padding: 20px;
+            font-size: 18px;
             font-weight: 600;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
         }
 
         .copy-button::before {
@@ -197,7 +189,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
+            transition: left 0.6s;
         }
 
         .copy-button:hover::before {
@@ -206,73 +198,48 @@
 
         .copy-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(22, 163, 74, 0.4);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
         }
 
         .copy-button:active {
             transform: translateY(-1px);
         }
 
-        .celebrations {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .confetti {
+        .home-button {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #ffd700;
-            animation: confetti-fall 3s linear infinite;
+            top: 20px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            z-index: 100;
         }
 
-        .confetti:nth-child(odd) { background: #ff6b6b; }
-        .confetti:nth-child(3n) { background: #4ecdc4; }
-        .confetti:nth-child(4n) { background: #45b7d1; }
-        .confetti:nth-child(5n) { background: #96ceb4; }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            color: white;
         }
 
-        .floating-icons {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .floating-icon {
-            position: absolute;
-            font-size: 30px;
-            opacity: 0.6;
-            animation: floatUpDown 6s ease-in-out infinite;
-        }
-
-        .floating-icon:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
-        .floating-icon:nth-child(2) { top: 30%; right: 15%; animation-delay: 1s; }
-        .floating-icon:nth-child(3) { bottom: 25%; left: 20%; animation-delay: 2s; }
-        .floating-icon:nth-child(4) { bottom: 35%; right: 10%; animation-delay: 3s; }
-        .floating-icon:nth-child(5) { top: 60%; left: 80%; animation-delay: 4s; }
-
-        @keyframes floatUpDown {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(180deg); }
+        .home-icon {
+            width: 16px;
+            height: 16px;
+            background: currentColor;
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'/%3E%3C/svg%3E") no-repeat center;
+            mask-size: contain;
         }
 
         .copy-feedback {
@@ -282,46 +249,95 @@
             transform: translate(-50%, -50%);
             background: rgba(34, 197, 94, 0.9);
             color: white;
-            padding: 15px 30px;
-            border-radius: 50px;
+            padding: 16px 32px;
+            border-radius: 12px;
             font-weight: 600;
             display: none;
             z-index: 1000;
             backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             animation: feedbackPop 0.6s ease-out;
+            font-size: 0.95rem;
         }
 
         @keyframes feedbackPop {
-            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
-            50% { transform: translate(-50%, -50%) scale(1.1); }
+            0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
             100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
+        /* Floating success particles */
+        .success-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(34, 197, 94, 0.6);
+            border-radius: 50%;
+            animation: float 4s infinite linear;
+        }
+
+        .particle:nth-child(odd) { background: rgba(102, 126, 234, 0.6); }
+        .particle:nth-child(3n) { background: rgba(118, 75, 162, 0.6); }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0px) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
         @media (max-width: 768px) {
-            .container { padding: 40px 30px; }
-            h1 { font-size: 2.2rem; }
-            .success-icon { width: 80px; height: 80px; font-size: 40px; }
-            .link { font-size: 1rem; }
+            .container {
+                padding: 32px 24px;
+                margin: 0 16px;
+            }
+            
+            h2 {
+                font-size: 2.4rem;
+            }
+            
+            .home-button {
+                position: fixed;
+                top: 16px;
+                left: 16px;
+            }
+
+            .success-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="success-bg"></div>
+    <div class="background-grid"></div>
+    <div class="success-particles" id="particles"></div>
     
-    <div class="celebrations" id="celebrations"></div>
-    
-    <div class="floating-icons">
-        <div class="floating-icon">🎉</div>
-        <div class="floating-icon">✨</div>
-        <div class="floating-icon">🎊</div>
-        <div class="floating-icon">🌟</div>
-        <div class="floating-icon">🎁</div>
-    </div>
+    <a href="index.html" class="home-button">
+        <div class="home-icon"></div>
+        Home
+    </a>
     
     <div class="container">
         <div class="success-icon">✅</div>
-        <h1>Success!</h1>
+        <h2>Success!</h2>
         <p class="subtitle">Your magic link is ready to share!</p>
         
         <div class="link-container">
@@ -339,21 +355,21 @@
     </div>
 
     <script>
-        // Create confetti animation
-        function createConfetti() {
-            const celebrations = document.getElementById('celebrations');
-            for (let i = 0; i < 50; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                celebrations.appendChild(confetti);
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 4 + 's';
+                particle.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                particles.appendChild(particle);
             }
         }
 
-        // Initialize confetti on page load
-        createConfetti();
+        // Initialize particles on page load
+        createParticles();
 
         // Copy link function
         function copyLink() {
@@ -379,10 +395,10 @@
             document.body.removeChild(tempTextarea);
         }
 
-        // Add some extra sparkle effects
+        // Add continuous particle effect
         setInterval(() => {
-            createConfetti();
-        }, 5000);
+            createParticles();
+        }, 6000);
     </script>
 </body>
 </html>
