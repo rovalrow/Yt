@@ -265,7 +265,7 @@
     
     <div class="container">
         <div class="header">
-            <h1>ðŸ”¥ Subscribe To Unlock! ðŸ”¥</h1>
+            <h1>🔥 Subscribe To Unlock! 🔥</h1>
         </div>
         
         <div class="video-container">
@@ -273,7 +273,7 @@
         </div>
         
         <a href="{{ data.channel }}" target="_blank" class="channel-link">
-            ðŸ“º Visit Channel
+            📺 Visit Channel
         </a>
         
         <div class="actions-container">
@@ -282,12 +282,12 @@
             </button>
             
             <button id="likeBtn" class="action-button pending">
-                <span>ðŸ‘ Like Video</span>
+                <span>👍 Like Video</span>
             </button>
             
             <form id="rewardForm" action="{{ data.url }}">
                 <button id="unlock" class="action-button unlock-button" disabled>
-                    ðŸŽ Unlock Rewards
+                    🎁 Unlock Rewards
                 </button>
             </form>
         </div>
@@ -338,14 +338,17 @@
 
         subBtn.addEventListener('click', () => {
             if (!subInterval) {
-                subBtn.innerHTML = '<span>Subscribing... â³</span>';
+                // Redirect to YouTube channel
+                window.open('{{ data.channel }}', '_blank');
+                
+                subBtn.innerHTML = '<span>Subscribing... ⏳</span>';
                 subInterval = setInterval(() => {
                     if (!tabVisible && subCounter > 0) {
                         subCounter--;
                     }
                     if (subCounter <= 0) {
                         clearInterval(subInterval);
-                        subBtn.innerHTML = '<span>Subscribed âœ…</span>';
+                        subBtn.innerHTML = '<span>Subscribed ✅</span>';
                         subBtn.classList.remove("pending");
                         subBtn.classList.add("complete");
                         subBtn.disabled = true;
@@ -359,14 +362,17 @@
 
         likeBtn.addEventListener('click', () => {
             if (!likeInterval) {
-                likeBtn.innerHTML = '<span>Liking... â³</span>';
+                // Redirect to YouTube video
+                window.open('{{ data.video }}', '_blank');
+                
+                likeBtn.innerHTML = '<span>Liking... ⏳</span>';
                 likeInterval = setInterval(() => {
                     if (!tabVisible && likeCounter > 0) {
                         likeCounter--;
                     }
                     if (likeCounter <= 0) {
                         clearInterval(likeInterval);
-                        likeBtn.innerHTML = '<span>Liked âœ…</span>';
+                        likeBtn.innerHTML = '<span>Liked ✅</span>';
                         likeBtn.classList.remove("pending");
                         likeBtn.classList.add("complete");
                         likeBtn.disabled = true;
@@ -382,7 +388,7 @@
             if (subDone && likeDone) {
                 unlockBtn.disabled = false;
                 unlockBtn.classList.add('enabled');
-                unlockBtn.innerHTML = '<span>ðŸŽ‰ Unlock Your Rewards! ðŸŽ‰</span>';
+                unlockBtn.innerHTML = '<span>🎉 Unlock Your Rewards! 🎉</span>';
             }
         }
     </script>
