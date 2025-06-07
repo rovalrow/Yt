@@ -27,4 +27,4 @@ def show(link_id):
     return render_template('show.html', data=data)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)  # Render uses PORT from environment, but this is fine for local
