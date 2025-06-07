@@ -13,130 +13,242 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
             min-height: 100vh;
             color: white;
             overflow-x: hidden;
         }
 
-        .background-animation {
+        .background-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 25% 25%, rgba(255, 0, 150, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(0, 255, 255, 0.1) 0%, transparent 50%);
-            animation: pulse 8s ease-in-out infinite;
+            opacity: 0.03;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
             z-index: 0;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 0.7; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.05); }
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 60px 20px;
             text-align: center;
         }
 
         .header {
-            margin-bottom: 40px;
-            animation: slideDown 1s ease-out;
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out;
         }
 
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-50px); }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
+            font-size: 4rem;
+            font-weight: 700;
             margin-bottom: 20px;
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            letter-spacing: -2px;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
         }
 
         .video-container {
             position: relative;
-            margin: 40px auto;
-            max-width: 640px;
-            border-radius: 20px;
+            margin: 50px auto;
+            max-width: 720px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             overflow: hidden;
-            box-shadow: 
-                0 25px 50px rgba(0, 0, 0, 0.4),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
-            animation: videoEntrance 1.2s ease-out 0.3s both;
+            animation: slideUp 1s ease-out 0.2s both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 16/9;
         }
 
-        @keyframes videoEntrance {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+        .video-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
         }
 
         iframe {
             width: 100%;
-            height: 360px;
+            height: 100%;
             border: none;
             display: block;
         }
 
-        .channel-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin: 20px 0 40px;
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            color: #4ecdc4;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid rgba(78, 205, 196, 0.3);
-        }
-
-        .channel-link:hover {
-            background: rgba(78, 205, 196, 0.1);
-            border-color: rgba(78, 205, 196, 0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(78, 205, 196, 0.2);
-        }
-
-        .actions-container {
-            display: flex;
-            flex-direction: column;
+        .actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 20px;
-            max-width: 400px;
-            margin: 0 auto;
+            max-width: 600px;
+            margin: 50px auto 0;
+            animation: fadeIn 1s ease-out 0.4s both;
         }
 
-        .action-button {
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 32px 28px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
             position: relative;
-            padding: 18px 32px;
-            font-size: 18px;
+            overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .action-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.8s;
+        }
+
+        .action-card:hover::before {
+            left: 100%;
+        }
+
+        .action-card.pending {
+            border-color: rgba(255, 107, 107, 0.5);
+            background: rgba(255, 107, 107, 0.08);
+            box-shadow: 0 8px 32px rgba(255, 107, 107, 0.15);
+        }
+
+        .action-card.pending:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255, 107, 107, 0.7);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.25);
+        }
+
+        .action-card.complete {
+            border-color: rgba(39, 174, 96, 0.6);
+            background: rgba(39, 174, 96, 0.12);
+            transform: scale(1.02);
+            box-shadow: 0 12px 36px rgba(39, 174, 96, 0.2);
+        }
+
+        .action-card.complete:hover {
+            transform: scale(1.02) translateY(-2px);
+        }
+
+        .action-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 16px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-icon {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+
+        .like-icon {
+            background: linear-gradient(135deg, #4ecdc4, #44a08d);
+        }
+
+        .action-icon::after {
+            font-size: 20px;
             font-weight: 600;
+        }
+
+        .subscribe-icon::after {
+            content: 'SUB';
+            font-size: 12px;
+            color: white;
+            font-weight: 700;
+        }
+
+        .like-icon::after {
+            content: '♡';
+            font-size: 24px;
+            color: white;
+        }
+
+        .like-icon.complete::after {
+            content: '♥';
+        }
+
+        .action-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .action-status {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .complete .action-status {
+            color: rgba(39, 174, 96, 0.9);
+        }
+
+        .unlock-section {
+            margin-top: 60px;
+            animation: fadeIn 1s ease-out 0.6s both;
+        }
+
+        .unlock-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
+            padding: 20px 48px;
+            font-size: 1.2rem;
+            font-weight: 600;
             border-radius: 16px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
             overflow: hidden;
+            opacity: 0.5;
+            pointer-events: none;
         }
 
-        .action-button::before {
+        .unlock-button.enabled {
+            opacity: 1;
+            pointer-events: auto;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+        }
+
+        .unlock-button.enabled:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4);
+        }
+
+        .unlock-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -147,250 +259,187 @@
             transition: left 0.6s;
         }
 
-        .action-button:hover::before {
+        .unlock-button:hover::before {
             left: 100%;
         }
 
-        .pending {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
-            color: white;
-            box-shadow: 0 8px 25px rgba(231, 76, 60, 0.3);
-        }
-
-        .pending:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(231, 76, 60, 0.4);
-        }
-
-        .complete {
-            background: linear-gradient(45deg, #27ae60, #2ecc71);
-            color: white;
-            box-shadow: 0 8px 25px rgba(39, 174, 96, 0.3);
-            transform: scale(1.05);
-        }
-
-        .complete:hover {
-            transform: scale(1.05) translateY(-2px);
-            box-shadow: 0 12px 30px rgba(39, 174, 96, 0.4);
-        }
-
-        .unlock-button {
-            background: linear-gradient(45deg, #95a5a6, #7f8c8d);
-            color: rgba(255, 255, 255, 0.6);
-            cursor: not-allowed;
-            margin-top: 20px;
-        }
-
-        .unlock-button.enabled {
-            background: linear-gradient(45deg, #f39c12, #e67e22, #d35400);
-            color: white;
-            cursor: pointer;
-            animation: glow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes glow {
-            from { box-shadow: 0 8px 25px rgba(243, 156, 18, 0.4); }
-            to { box-shadow: 0 15px 40px rgba(243, 156, 18, 0.7); }
-        }
-
-        .unlock-button.enabled:hover {
-            transform: translateY(-4px) scale(1.05);
-        }
-
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            animation: float 15s infinite linear;
-        }
-
-        .particle:nth-child(odd) {
-            background: rgba(78, 205, 196, 0.6);
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
-        }
-
-        .success-animation {
+        .success-popup {
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0);
+            background: rgba(39, 174, 96, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 2px solid rgba(39, 174, 96, 0.5);
             z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
-        .checkmark {
-            width: 80px;
-            height: 80px;
+        .success-popup.show {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        .success-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 16px;
+            background: white;
             border-radius: 50%;
-            display: none;
-            background: #27ae60;
-            animation: checkmarkAppear 0.8s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #27ae60;
+            font-size: 24px;
+            font-weight: bold;
         }
 
-        @keyframes checkmarkAppear {
-            0% { transform: scale(0); opacity: 0; }
-            50% { transform: scale(1.2); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
+        .success-icon::after {
+            content: '✓';
         }
 
         @media (max-width: 768px) {
-            h1 { font-size: 2.5rem; }
-            iframe { height: 250px; }
-            .actions-container { max-width: 300px; }
-            .action-button { font-size: 16px; padding: 16px 24px; }
+            .container {
+                padding: 40px 16px;
+            }
+            
+            h1 {
+                font-size: 2.8rem;
+            }
+            
+            .actions-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .video-header {
+                padding: 20px 24px;
+            }
+            
+            .unlock-button {
+                padding: 18px 36px;
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="background-animation"></div>
-    <div class="particles" id="particles"></div>
+    <div class="background-grid"></div>
     
     <div class="container">
         <div class="header">
-            <h1>🔥 Subscribe To Unlock! 🔥</h1>
+            <h1>Subscribe to Unlock</h1>
+            <p class="subtitle">Complete the actions below to access your rewards</p>
         </div>
         
         <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/{{ data.video.split('v=')[-1] }}" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
         </div>
         
-        <a href="{{ data.channel }}" target="_blank" class="channel-link">
-            📺 Visit Channel
-        </a>
-        
-        <div class="actions-container">
-            <button id="subBtn" class="action-button pending">
-                <span>Subscribe</span>
-            </button>
+        <div class="actions-grid">
+            <div id="subscribeCard" class="action-card pending">
+                <div class="action-icon subscribe-icon"></div>
+                <div class="action-title">Subscribe</div>
+                <div class="action-status" id="subscribeStatus">Click to subscribe</div>
+            </div>
             
-            <button id="likeBtn" class="action-button pending">
-                <span>👍 Like Video</span>
-            </button>
-            
-            <form id="rewardForm" action="{{ data.url }}">
-                <button id="unlock" class="action-button unlock-button" disabled>
-                    🎁 Unlock Rewards
+            <div id="likeCard" class="action-card pending">
+                <div class="action-icon like-icon"></div>
+                <div class="action-title">Like Video</div>
+                <div class="action-status" id="likeStatus">Click to like</div>
+            </div>
+        </div>
+
+        <div class="unlock-section">
+            <form id="rewardForm" action="/unlock">
+                <button id="unlockButton" class="unlock-button" disabled>
+                    Unlock Your Rewards
                 </button>
             </form>
         </div>
     </div>
 
-    <div class="success-animation">
-        <div class="checkmark" id="checkmark"></div>
+    <div class="success-popup" id="successPopup">
+        <div class="success-icon"></div>
+        <div style="font-weight: 600; font-size: 1.1rem;">Action Completed!</div>
     </div>
 
     <script>
-        // Create floating particles
-        function createParticles() {
-            const particles = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 15 + 's';
-                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-                particles.appendChild(particle);
-            }
-        }
-        createParticles();
-
+        let subscribed = false;
+        let liked = false;
         let subCounter = 5;
         let likeCounter = 5;
-        let subDone = false;
-        let likeDone = false;
         let tabVisible = true;
         
-        const subBtn = document.getElementById("subBtn");
-        const likeBtn = document.getElementById("likeBtn");
-        const unlockBtn = document.getElementById("unlock");
-        const checkmark = document.getElementById("checkmark");
+        const subscribeCard = document.getElementById('subscribeCard');
+        const likeCard = document.getElementById('likeCard');
+        const subscribeStatus = document.getElementById('subscribeStatus');
+        const likeStatus = document.getElementById('likeStatus');
+        const unlockButton = document.getElementById('unlockButton');
+        const successPopup = document.getElementById('successPopup');
         
         let subInterval, likeInterval;
 
-        document.addEventListener("visibilitychange", () => {
+        document.addEventListener('visibilitychange', () => {
             tabVisible = !document.hidden;
         });
 
         function showSuccess() {
-            checkmark.style.display = 'block';
+            successPopup.classList.add('show');
             setTimeout(() => {
-                checkmark.style.display = 'none';
+                successPopup.classList.remove('show');
             }, 2000);
         }
 
-        subBtn.addEventListener('click', () => {
-            if (!subInterval) {
-                // Redirect to YouTube channel
-                window.open('{{ data.channel }}', '_blank');
-                
-                subBtn.innerHTML = '<span>Subscribing... ⏳</span>';
+        function checkUnlockStatus() {
+            if (subscribed && liked) {
+                unlockButton.disabled = false;
+                unlockButton.classList.add('enabled');
+            }
+        }
+
+        subscribeCard.addEventListener('click', () => {
+            if (!subscribed && !subInterval) {
+                subscribeStatus.textContent = 'Subscribing...';
                 subInterval = setInterval(() => {
                     if (!tabVisible && subCounter > 0) {
                         subCounter--;
                     }
                     if (subCounter <= 0) {
                         clearInterval(subInterval);
-                        subBtn.innerHTML = '<span>Subscribed ✅</span>';
-                        subBtn.classList.remove("pending");
-                        subBtn.classList.add("complete");
-                        subBtn.disabled = true;
-                        subDone = true;
+                        subscribed = true;
+                        subscribeCard.classList.remove('pending');
+                        subscribeCard.classList.add('complete');
+                        subscribeStatus.textContent = 'Subscribed successfully';
                         showSuccess();
-                        checkUnlock();
+                        checkUnlockStatus();
                     }
                 }, 1000);
             }
         });
 
-        likeBtn.addEventListener('click', () => {
-            if (!likeInterval) {
-                // Redirect to YouTube video
-                window.open('{{ data.video }}', '_blank');
-                
-                likeBtn.innerHTML = '<span>Liking... ⏳</span>';
+        likeCard.addEventListener('click', () => {
+            if (!liked && !likeInterval) {
+                likeStatus.textContent = 'Liking...';
+                const likeIcon = likeCard.querySelector('.like-icon');
                 likeInterval = setInterval(() => {
                     if (!tabVisible && likeCounter > 0) {
                         likeCounter--;
                     }
                     if (likeCounter <= 0) {
                         clearInterval(likeInterval);
-                        likeBtn.innerHTML = '<span>Liked ✅</span>';
-                        likeBtn.classList.remove("pending");
-                        likeBtn.classList.add("complete");
-                        likeBtn.disabled = true;
-                        likeDone = true;
+                        liked = true;
+                        likeCard.classList.remove('pending');
+                        likeCard.classList.add('complete');
+                        likeIcon.classList.add('complete');
+                        likeStatus.textContent = 'Liked successfully';
                         showSuccess();
-                        checkUnlock();
+                        checkUnlockStatus();
                     }
                 }, 1000);
             }
         });
-
-        function checkUnlock() {
-            if (subDone && likeDone) {
-                unlockBtn.disabled = false;
-                unlockBtn.classList.add('enabled');
-                unlockBtn.innerHTML = '<span>🎉 Unlock Your Rewards! 🎉</span>';
-            }
-        }
     </script>
 </body>
 </html>
