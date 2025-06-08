@@ -799,8 +799,8 @@
             constructor() {
                 this.subscribed = false;
                 this.liked = false;
-                this.subCounter = 5;
-                this.likeCounter = 5;
+                this.subCounter = 8;
+                this.likeCounter = 8;
                 this.tabVisible = true;
                 this.subInterval = null;
                 this.likeInterval = null;
@@ -874,7 +874,7 @@ handleSubscribe() {
     this.elements.subscribeCard.classList.add('processing');
     this.elements.subscribeStatus.textContent = `Subscribing...`;
 
-    this.subCounter = 5;
+    this.subCounter = 8;
     clearInterval(this.subInterval);
     this.subInterval = setInterval(() => {
         if (!document.hidden) return; // Pause if tab is visible
@@ -902,7 +902,7 @@ handleLike() {
     this.elements.likeCard.classList.add('processing');
     this.elements.likeStatus.textContent = `Liking...`;
 
-    this.likeCounter = 5;
+    this.likeCounter = 8;
     clearInterval(this.likeInterval);
     this.likeInterval = setInterval(() => {
         if (!document.hidden) return; // Pause if tab is visible
