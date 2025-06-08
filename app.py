@@ -36,16 +36,18 @@ def redirect_to_root():
 @app.route('/unlock', methods=['POST'])
 def unlock():
     link_id = request.form.get('link_id')
+    
     if not link_id:
         return "Invalid unlock request", 400
-    
-    # Fetch from Supabase
+
+    # Fetch the link data from Supabase
     result = supabase.table('links').select("*").eq("id", link_id).execute()
     data = result.data[0] if result.data else None
 
     if not data:
         return "Invalid Link", 404
 
+    # Redirect to the saved URL
     return redirect(data['url'])
 
 @app.route('/show/<link_id>')
