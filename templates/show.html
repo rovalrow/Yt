@@ -713,6 +713,7 @@
         }
     </style>
 </head>
+Do you know the issue here why i cannot clcik the unlock rewards button when i did both of the tasks ? I did subscribe and like bjt its still disabled its bot enabled like i csnt click it:
 <body>
     <div class="background-effects">
         <div class="floating-orbs">
@@ -914,14 +915,6 @@
                 }, 1000);
             }
 
-            checkUnlockProgress() {
-    if (this.subscribed && this.liked) {
-        this.elements.unlockButton.disabled = false;
-        this.elements.unlockButton.classList.remove('disabled'); // <-- important
-        this.elements.unlockButton.classList.add('active');
-    }
-}
-
             handleUnlock(e) {
                 e.preventDefault();
                 this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
@@ -934,9 +927,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             new SubscribeUnlock();
         });
-    </script>
-</body>
-</html>
+
                         }
                     }
                 }, 1000);
@@ -950,6 +941,13 @@
                 }, 2000);
             }
 
+                      checkUnlockProgress() {
+    if (this.subscribed && this.liked) {
+        this.elements.unlockButton.disabled = false;
+        this.elements.unlockButton.classList.remove('disabled'); // <-- important
+        this.elements.unlockButton.classList.add('active');
+    }
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             new SubscribeUnlock();
