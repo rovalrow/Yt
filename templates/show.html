@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gate2Link - Premium Experience</title>
+    <title>Subscribe to Unlock - Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script type="text/javascript" src="//cdn.runative-syndicate.com/sdk/v1/bi.js" data-ts-spot="8210a6e1d1fe47d789cb04224557d284" data-ts-width="250" data-ts-height="150"  async defer></script>
     <style>
@@ -737,7 +737,7 @@
         </div>
         
         <div class="header">
-            <h1>Gate2Link</h1>
+            <h1>Subscribe & Like to Unlock</h1>
             <p class="subtitle">Complete the required actions below to unlock your exclusive rewards and premium content</p>
         </div>
 
@@ -753,20 +753,19 @@
                 <p class="actions-subtitle">Complete both actions to proceed</p>
             </div>
             
-            <div class="actions-grid">
-                <div id="subscribeCard" class="action-card pending">
-                    <div class="action-icon subscribe-icon"></div>
-                    <div class="action-title">Subscribe to Channel</div>
-                    <div class="action-status" id="subscribeStatus">Click to subscribe</div>
-                </div>
-                
-                <div id="likeCard" class="action-card pending">
-                    <div class="action-icon like-icon"></div>
-                    <div class="action-title">Like This Video</div>
-                    <div class="action-status" id="likeStatus">Click to like</div>
-                </div>
-            </div>
-        </div>
+            <div class="actions-grid">
+                <div id="subscribeCard" class="action-card pending" onclick="window.open('{{ data.channel }}', '_blank')">
+                    <div class="action-icon subscribe-icon"></div>
+                    <div class="action-title">Subscribe to Channel</div>
+                    <div class="action-status" id="subscribeStatus">Click to subscribe</div>
+                </div>
+                
+                <div id="likeCard" class="action-card pending" onclick="window.open('{{ data.video }}', '_blank')">
+                    <div class="action-icon like-icon"></div>
+                    <div class="action-title">Like This Video</div>
+                    <div class="action-status" id="likeStatus">Click to like</div>
+                </div>
+            </div>
 
         <div class="progress-container">
             <div class="progress-header">
@@ -949,22 +948,9 @@
     }
 }
 
-        document.addEventListener('DOMContentLoaded', () => {
+     document.addEventListener('DOMContentLoaded', () => {
             new SubscribeUnlock();
         });
     </script>
 </body>
-</html>dd('active');
-    }
-}
-
-        document.addEventListener('DOMContentLoaded', () => {
-            new SubscribeUnlock();
-        });
-    </script>
-</body>
-</html>scribeUnlock();
-        });
-    </script>
-</body>
-</html>
+</html>html>
