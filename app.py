@@ -22,6 +22,15 @@ def index():
 @app.route('/index.html')
 def redirect_to_root():
     return redirect('/')
+
+@app.route('/unlock', methods=['POST'])
+def unlock():
+    link_id = request.form.get('link_id')
+    if not link_id or link_id not in links:
+        return "Invalid unlock request", 400
+    
+    # Redirect to the original show_url
+    return redirect(links[link_id]['url'])
     
 @app.route('/show/<link_id>')
 def show(link_id):
