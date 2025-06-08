@@ -778,6 +778,7 @@
 
             <div class="unlock-section">
                 <form id="rewardForm" action="/unlock" method="POST">
+                <input type="hidden" name="link_id" value="{{ data.id }}">
                     <button id="unlockButton" class="unlock-button" type="submit" disabled>
                         🎁 Unlock Your Rewards
                     </button>
