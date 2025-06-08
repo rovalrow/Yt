@@ -863,62 +863,68 @@
             }
         }
 
+        handleSubscribe() {
+    if (this.subscribed) return;
+
+    window.open("{{ data.channel }}", "_blank");
+
+    this.elements.subscribeCard.classList.remove('pending');
+    this.elements.subscribeCard.classList.add('processing');
+    this.elements.subscribeStatus.textContent = `Subscribing...`;
+
+    this.subCounter = 5;
+    clearInterval(this.subInterval); // Safety
+    this.subInterval = setInterval(() => {
+        this.subCounter--;
+        this.elements.subscribeStatus.textContent = `Subscribing... (${this.subCounter})`;
+
+        if (this.subCounter <= 0) {
+            clearInterval(this.subInterval);
+            this.subscribed = true;
+            this.elements.subscribeCard.classList.remove('processing');
+            this.elements.subscribeCard.classList.add('complete');
+            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
+            this.showSuccess('Successfully subscribed!');
+            this.checkUnlockProgress();
+            this.updateProgress();
+        }
+    }, 1000);
+}
+
+handleLike() {
+    if (this.liked) return;
+
+    window.open("{{ data.video }}", "_blank");
+
+    this.elements.likeCard.classList.remove('pending');
+    this.elements.likeCard.classList.add('processing');
+    this.elements.likeStatus.textContent = `Liking...`;
+
+    this.likeCounter = 5;
+    clearInterval(this.likeInterval); // Safety
+    this.likeInterval = setInterval(() => {
+        this.likeCounter--;
+        this.elements.likeStatus.textContent = `Liking... (${this.likeCounter})`;
+
+        if (this.likeCounter <= 0) {
+            clearInterval(this.likeInterval);
+            this.liked = true;
+            this.elements.likeCard.classList.remove('processing');
+            this.elements.likeCard.classList.add('complete');
+            this.elements.likeStatus.textContent = 'Liked! ✓';
+            this.showSuccess('Video liked!');
+            this.checkUnlockProgress();
+            this.updateProgress();
+        }
+    }, 1000);
+}
+        
         checkUnlockProgress() {
             if (this.subscribed && this.liked) {
                 this.elements.unlockButton.disabled = false;
                 this.elements.unlockButton.classList.remove('disabled');
                 this.elements.unlockButton.classList.add('active');
             }
-        }
-
-        handleSubscribe() {
-            if (this.subscribed) return;
-
-            window.open("{{ data.channel }}", "_blank");
-            this.elements.subscribeCard.classList.remove('pending');
-            this.elements.subscribeCard.classList.add('processing');
-            this.elements.subscribeStatus.textContent = `Subscribing...`;
-
-            this.subInterval = setInterval(() => {
-                if (!this.tabVisible) {
-                    this.subCounter--;
-                    if (this.subCounter <= 0) {
-                        clearInterval(this.subInterval);
-                        this.subscribed = true;
-                        this.elements.subscribeCard.classList.remove('processing');
-                        this.elements.subscribeCard.classList.add('complete');
-                        this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
-                        this.showSuccess('Successfully subscribed!');
-                        this.checkUnlockProgress();
-                        this.updateProgress();
-                    }
-                }
-            }, 1000);
-        }
-
-        handleLike() {
-            if (this.liked) return;
-
-            window.open("{{ data.video }}", "_blank");
-            this.elements.likeCard.classList.remove('pending');
-            this.elements.likeCard.classList.add('processing');
-            this.elements.likeStatus.textContent = `Liking...`;
-
-            this.likeInterval = setInterval(() => {
-                if (!this.tabVisible) {
-                    this.likeCounter--;
-                    if (this.likeCounter <= 0) {
-                        clearInterval(this.likeInterval);
-                        this.liked = true;
-                        this.elements.likeCard.classList.remove('processing');
-                        this.elements.likeCard.classList.add('complete');
-                        this.elements.likeStatus.textContent = 'Liked! ✓';
-                        this.showSuccess('Video liked!');
-                        this.checkUnlockProgress();
-                        this.updateProgress();
-                    }
-                }
-            }, 1000);
         }
 
         handleUnlock(e) {
