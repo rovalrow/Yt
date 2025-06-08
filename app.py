@@ -21,7 +21,7 @@ def index():
     
 @app.route('/index.html')
 def index_html():
-    return render_template('index.html')
+    return redirect('https://task2link-e4tf.onrender.com/')
     
 @app.route('/show/<link_id>')
 def show(link_id):
