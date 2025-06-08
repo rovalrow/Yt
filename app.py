@@ -18,11 +18,7 @@ def index():
         }
         return render_template('result.html', link=url_for('show', link_id=uid, _external=True))
     return render_template('index.html')
-    
-@app.route('/index.html')
-def index_html():
-    return redirect('https://gate2link.onrender.com/')
-    
+      
 @app.route('/show/<link_id>')
 def show(link_id):
     data = links.get(link_id)
