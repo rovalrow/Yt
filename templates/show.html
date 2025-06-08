@@ -866,57 +866,59 @@
                 }
             }
 
-            handleSubscribe() {
-                if (this.subscribed) return;
+handleSubscribe() {
+    if (this.subscribed) return;
 
-                this.elements.subscribeCard.classList.remove('pending');
-                this.elements.subscribeCard.classList.add('processing');
-                this.elements.subscribeStatus.textContent = `Subscribing...`;
+    this.elements.subscribeCard.classList.remove('pending');
+    this.elements.subscribeCard.classList.add('processing');
+    this.elements.subscribeStatus.textContent = `Subscribing...`;
 
-                this.subCounter = 5;
-                clearInterval(this.subInterval);
-                this.subInterval = setInterval(() => {
-                    this.subCounter--;
-                    this.elements.subscribeStatus.textContent = `Subscribing... (${this.subCounter})`;
+    this.subCounter = 5;
+    clearInterval(this.subInterval);
+    this.subInterval = setInterval(() => {
+        if (document.visibilityState === 'visible') return; // Wait until user is NOT viewing
 
-                    if (this.subCounter <= 0) {
-                        clearInterval(this.subInterval);
-                        this.subscribed = true;
-                        this.elements.subscribeCard.classList.remove('processing');
-                        this.elements.subscribeCard.classList.add('complete');
-                        this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
-                        this.showSuccess('Successfully subscribed!');
-                        this.checkUnlockProgress();
-                        this.updateProgress();
-                    }
-                }, 1000);
-            }
+        this.subCounter--;
 
-            handleLike() {
-                if (this.liked) return;
+        if (this.subCounter <= 0) {
+            clearInterval(this.subInterval);
+            this.subscribed = true;
+            this.elements.subscribeCard.classList.remove('processing');
+            this.elements.subscribeCard.classList.add('complete');
+            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
+            this.showSuccess('Successfully subscribed!');
+            this.checkUnlockProgress();
+            this.updateProgress();
+        }
+    }, 1000);
+},
 
-                this.elements.likeCard.classList.remove('pending');
-                this.elements.likeCard.classList.add('processing');
-                this.elements.likeStatus.textContent = `Liking...`;
+handleLike() {
+    if (this.liked) return;
 
-                this.likeCounter = 5;
-                clearInterval(this.likeInterval);
-                this.likeInterval = setInterval(() => {
-                    this.likeCounter--;
-                    this.elements.likeStatus.textContent = `Liking... (${this.likeCounter})`;
+    this.elements.likeCard.classList.remove('pending');
+    this.elements.likeCard.classList.add('processing');
+    this.elements.likeStatus.textContent = `Liking...`;
 
-                    if (this.likeCounter <= 0) {
-                        clearInterval(this.likeInterval);
-                        this.liked = true;
-                        this.elements.likeCard.classList.remove('processing');
-                        this.elements.likeCard.classList.add('complete');
-                        this.elements.likeStatus.textContent = 'Liked! ✓';
-                        this.showSuccess('Video liked!');
-                        this.checkUnlockProgress();
-                        this.updateProgress();
-                    }
-                }, 1000);
-            }
+    this.likeCounter = 5;
+    clearInterval(this.likeInterval);
+    this.likeInterval = setInterval(() => {
+        if (document.visibilityState === 'visible') return; // Wait until user is NOT viewing
+
+        this.likeCounter--;
+
+        if (this.likeCounter <= 0) {
+            clearInterval(this.likeInterval);
+            this.liked = true;
+            this.elements.likeCard.classList.remove('processing');
+            this.elements.likeCard.classList.add('complete');
+            this.elements.likeStatus.textContent = 'Liked! ✓';
+            this.showSuccess('Video liked!');
+            this.checkUnlockProgress();
+            this.updateProgress();
+        }
+    }, 1000);
+}
 
 checkUnlockProgress() {
     if (this.subscribed && this.liked) {
