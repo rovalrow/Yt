@@ -3,14 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Link Ready</title>
+    <title>Gate2Link - Link Ready</title>
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="shortcut icon" href="/favicon.ico" />
-<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <script type="text/javascript" src="//cdn.runative-syndicate.com/sdk/v1/bi.js" data-ts-spot="0958163cdd6e4045b18094e9366ae69d" data-ts-width="250" data-ts-height="150" data-ts-extid="{extid}" async defer></script>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            --success-gradient: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #10b981 100%);
+            --dark-gradient: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent-blue: #00d4ff;
+            --accent-purple: #8b5cf6;
+            --accent-pink: #f472b6;
+            --accent-green: #22c55e;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,49 +35,222 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            background: var(--dark-gradient);
             min-height: 100vh;
-            color: white;
+            color: var(--text-primary);
             overflow-x: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            position: relative;
         }
 
-        .background-grid {
+        /* Advanced Background Effects */
+        .background-effects {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.03;
+            z-index: -1;
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
             background-image: 
                 linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
+            background-size: 60px 60px;
+            animation: gridFloat 20s ease-in-out infinite;
+        }
+
+        .floating-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.3), transparent);
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.2), transparent);
+            top: 60%;
+            right: 20%;
+            animation-delay: 5s;
+        }
+
+        .orb:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(244, 114, 182, 0.2), transparent);
+            bottom: 20%;
+            left: 30%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-30px) scale(1.1); }
+        }
+
+        @keyframes gridFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Header Navigation */
+        .header-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--primary-gradient);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .logo-icon::before {
+            content: '⚡';
+            font-size: 18px;
+            color: white;
+        }
+
+        .home-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .home-btn:hover::before {
+            left: 100%;
+        }
+
+        .home-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .home-icon {
+            width: 16px;
+            height: 16px;
+            background: currentColor;
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'/%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+
+        /* Main Container */
+        .main-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 120px 20px 80px;
         }
 
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 48px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2);
-            animation: slideIn 0.8s ease-out;
+            background: var(--glass-bg);
+            backdrop-filter: blur(30px);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            padding: 60px 48px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: containerSlideIn 1s ease-out;
+            position: relative;
+            overflow: hidden;
             text-align: center;
         }
 
-        @keyframes slideIn {
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--success-gradient);
+        }
+
+        @keyframes containerSlideIn {
             from {
                 opacity: 0;
-                transform: translateY(50px) scale(0.9);
+                transform: translateY(60px) scale(0.9);
             }
             to {
                 opacity: 1;
@@ -69,18 +258,45 @@
             }
         }
 
+        /* Success Icon */
         .success-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 24px;
-            background: linear-gradient(135deg, #22c55e, #16a34a);
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 32px;
+            background: var(--success-gradient);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 40px;
+            position: relative;
             animation: iconPulse 2s ease-in-out infinite;
-            box-shadow: 0 8px 32px rgba(34, 197, 94, 0.3);
+            box-shadow: 
+                0 15px 40px rgba(34, 197, 94, 0.4),
+                inset 0 2px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .success-icon::before {
+            content: '';
+            width: 48px;
+            height: 48px;
+            background: white;
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='3'%3E%3Cpolyline points='20,6 9,17 4,12'%3E%3C/polyline%3E%3C/svg%3E");
+            mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
+        }
+
+        .success-icon::after {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border: 2px solid var(--accent-green);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: ripple 2s infinite;
         }
 
         @keyframes iconPulse {
@@ -88,39 +304,41 @@
             50% { transform: scale(1.05); }
         }
 
-        h2 {
-            font-size: 3rem;
-            font-weight: 700;
+        @keyframes ripple {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        .main-title {
+            font-size: 3.5rem;
+            font-weight: 900;
             margin-bottom: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--success-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -1px;
+            letter-spacing: -2px;
+            line-height: 1.1;
         }
 
         .subtitle {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 1.1rem;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
             font-weight: 400;
-            margin-bottom: 40px;
+            margin-bottom: 48px;
         }
 
+        /* Link Container */
         .link-container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            padding: 24px;
-            margin-bottom: 24px;
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 32px;
+            margin-bottom: 32px;
             position: relative;
             overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .link-container:hover {
-            border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .link-container::before {
@@ -130,7 +348,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            background: linear-gradient(90deg, transparent, rgba(34, 197, 94, 0.1), transparent);
             animation: shimmer 3s infinite;
         }
 
@@ -139,10 +357,17 @@
             100% { left: 100%; }
         }
 
+        .link-container:hover {
+            border-color: var(--accent-green);
+            background: rgba(34, 197, 94, 0.05);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.2);
+        }
+
         .link-label {
-            font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
@@ -150,41 +375,50 @@
 
         .link {
             display: block;
-            font-size: 1rem;
-            color: #667eea;
+            font-size: 1.1rem;
+            color: var(--accent-green);
             text-decoration: none;
             word-break: break-all;
-            padding: 16px;
-            background: rgba(102, 126, 234, 0.1);
-            border-radius: 12px;
+            padding: 20px 24px;
+            background: rgba(34, 197, 94, 0.08);
+            border-radius: 16px;
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
-            border: 1px solid rgba(102, 126, 234, 0.2);
+            border: 1px solid rgba(34, 197, 94, 0.2);
             font-family: 'Monaco', 'Menlo', monospace;
+            font-weight: 500;
         }
 
         .link:hover {
-            background: rgba(102, 126, 234, 0.15);
-            border-color: rgba(102, 126, 234, 0.4);
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.4);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.2);
+            box-shadow: 0 8px 24px rgba(34, 197, 94, 0.2);
+            color: #10b981;
         }
 
+        /* Copy Button */
         .copy-button {
             width: 100%;
-            padding: 20px;
+            padding: 24px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             border: none;
-            border-radius: 16px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            background: var(--success-gradient);
             color: white;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 15px 50px rgba(34, 197, 94, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
         }
 
         .copy-button::before {
@@ -194,7 +428,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
             transition: left 0.6s;
         }
 
@@ -203,67 +437,42 @@
         }
 
         .copy-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 60px rgba(34, 197, 94, 0.5);
         }
 
         .copy-button:active {
-            transform: translateY(-1px);
-        }
-
-        .home-button {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-        }
-
-        .home-button:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            color: white;
         }
 
-        .home-icon {
-            width: 16px;
-            height: 16px;
-            background: currentColor;
-            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'/%3E%3C/svg%3E") no-repeat center;
+        .copy-icon {
+            width: 20px;
+            height: 20px;
+            background: white;
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Crect x='9' y='9' width='13' height='13' rx='2' ry='2'%3E%3C/rect%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'%3E%3C/path%3E%3C/svg%3E");
             mask-size: contain;
+            mask-repeat: no-repeat;
+            mask-position: center;
         }
 
+        /* Copy Feedback */
         .copy-feedback {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(34, 197, 94, 0.9);
+            background: var(--success-gradient);
             color: white;
-            padding: 16px 32px;
-            border-radius: 12px;
+            padding: 20px 32px;
+            border-radius: 16px;
             font-weight: 600;
             display: none;
             z-index: 1000;
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: feedbackPop 0.6s ease-out;
-            font-size: 0.95rem;
+            font-size: 1rem;
+            box-shadow: 0 15px 40px rgba(34, 197, 94, 0.4);
         }
 
         @keyframes feedbackPop {
@@ -272,7 +481,7 @@
             100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
         }
 
-        /* Floating success particles */
+        /* Success Particles */
         .success-particles {
             position: fixed;
             top: 0;
@@ -285,17 +494,18 @@
 
         .particle {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(34, 197, 94, 0.6);
+            width: 6px;
+            height: 6px;
+            background: var(--accent-green);
             border-radius: 50%;
-            animation: float 4s infinite linear;
+            animation: particleFloat 4s infinite linear;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
         }
 
-        .particle:nth-child(odd) { background: rgba(102, 126, 234, 0.6); }
-        .particle:nth-child(3n) { background: rgba(118, 75, 162, 0.6); }
+        .particle:nth-child(2n) { background: var(--accent-blue); box-shadow: 0 0 10px rgba(0, 212, 255, 0.6); }
+        .particle:nth-child(3n) { background: var(--accent-purple); box-shadow: 0 0 10px rgba(139, 92, 246, 0.6); }
 
-        @keyframes float {
+        @keyframes particleFloat {
             0% {
                 transform: translateY(100vh) translateX(0px) rotate(0deg);
                 opacity: 0;
@@ -303,68 +513,155 @@
             10% { opacity: 1; }
             90% { opacity: 1; }
             100% {
-                transform: translateY(-100vh) translateX(50px) rotate(360deg);
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
                 opacity: 0;
             }
         }
 
+        /* Footer */
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 40px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid var(--glass-border);
+            z-index: 100;
+        }
+
+        .footer-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 400;
+        }
+
+        .footer-text a {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .header-nav {
+                padding: 16px 20px;
+            }
+
             .container {
-                padding: 32px 24px;
+                padding: 40px 24px;
                 margin: 0 16px;
+                border-radius: 24px;
             }
             
-            h2 {
-                font-size: 2.4rem;
-            }
-            
-            .home-button {
-                position: fixed;
-                top: 16px;
-                left: 16px;
+            .main-title {
+                font-size: 2.8rem;
             }
 
             .success-icon {
-                width: 60px;
-                height: 60px;
-                font-size: 30px;
+                width: 80px;
+                height: 80px;
+            }
+
+            .success-icon::before {
+                width: 32px;
+                height: 32px;
+            }
+
+            .main-container {
+                padding: 140px 20px 100px;
+            }
+
+            .footer {
+                position: relative;
+                margin-top: 40px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: 2.2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+
+            .copy-button {
+                padding: 20px;
+                font-size: 16px;
+            }
+
+            .link {
+                font-size: 0.95rem;
+                padding: 16px 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-grid"></div>
+    <div class="background-effects">
+        <div class="grid-overlay"></div>
+        <div class="floating-orbs">
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+        </div>
+    </div>
+    
     <div class="success-particles" id="particles"></div>
     
-    <a href="" class="home-button">
-        <div class="home-icon"></div>
-        Home
-    </a>
-    
-    <div class="container">
-        <div class="success-icon">✅</div>
-        <h2>Success!</h2>
-        <p class="subtitle">Your magic link is ready to share!</p>
-        
-        <div class="link-container">
-            <div class="link-label">Your Generated Link</div>
-            <a href="{{ link }}" class="link" id="generatedLink">{{ link }}</a>
+    <nav class="header-nav">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            Gate2Link
         </div>
-        
-        <button class="copy-button" onclick="copyLink()">
-            📋 Copy Link
-        </button>
+        <a href="" class="home-btn">
+            <div class="home-icon"></div>
+            Home
+        </a>
+    </nav>
+    
+    <div class="main-container">
+        <div class="container">
+            <div class="success-icon"></div>
+            <h1 class="main-title">Success!</h1>
+            <p class="subtitle">Your magic link is ready to share!</p>
+            
+            <div class="link-container">
+                <div class="link-label">Your Generated Link</div>
+                <a href="{{ link }}" class="link" id="generatedLink">{{ link }}</a>
+            </div>
+            
+            <button class="copy-button" onclick="copyLink()">
+                <div class="copy-icon"></div>
+                Copy Link
+            </button>
+        </div>
     </div>
 
     <div class="copy-feedback" id="copyFeedback">
         ✅ Link copied to clipboard!
     </div>
 
+    <footer class="footer">
+        <p class="footer-text">
+            Created By <a href="#">Narukisora</a> | Gate2Link © 2025
+        </p>
+    </footer>
+
     <script>
         // Create floating particles
         function createParticles() {
             const particles = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
                 particle.style.left = Math.random() * 100 + '%';
@@ -382,29 +679,60 @@
             const linkElement = document.getElementById('generatedLink');
             const feedback = document.getElementById('copyFeedback');
             
-            // Create a temporary textarea to copy the text
-            const tempTextarea = document.createElement('textarea');
-            tempTextarea.value = linkElement.textContent || linkElement.innerText;
-            document.body.appendChild(tempTextarea);
-            tempTextarea.select();
-            
-            try {
-                document.execCommand('copy');
+            // Use modern clipboard API if available
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(linkElement.textContent || linkElement.innerText).then(() => {
+                    showCopyFeedback();
+                }).catch(err => {
+                    console.error('Failed to copy link:', err);
+                    fallbackCopyTextToClipboard();
+                });
+            } else {
+                // Fallback for older browsers
+                fallbackCopyTextToClipboard();
+            }
+
+            function fallbackCopyTextToClipboard() {
+                const tempTextarea = document.createElement('textarea');
+                tempTextarea.value = linkElement.textContent || linkElement.innerText;
+                document.body.appendChild(tempTextarea);
+                tempTextarea.select();
+                
+                try {
+                    document.execCommand('copy');
+                    showCopyFeedback();
+                } catch (err) {
+                    console.error('Failed to copy link:', err);
+                }
+                
+                document.body.removeChild(tempTextarea);
+            }
+
+            function showCopyFeedback() {
                 feedback.style.display = 'block';
                 setTimeout(() => {
                     feedback.style.display = 'none';
-                }, 2000);
-            } catch (err) {
-                console.error('Failed to copy link:', err);
+                }, 2500);
             }
-            
-            document.body.removeChild(tempTextarea);
         }
 
         // Add continuous particle effect
         setInterval(() => {
+            // Clear old particles to prevent memory buildup
+            const particleContainer = document.getElementById('particles');
+            while (particleContainer.children.length > 50) {
+                particleContainer.removeChild(particleContainer.firstChild);
+            }
             createParticles();
         }, 6000);
+
+        // Add subtle animation to the success icon on load
+        window.addEventListener('load', () => {
+            const successIcon = document.querySelector('.success-icon');
+            setTimeout(() => {
+                successIcon.style.animation += ', iconCelebrate 1s ease-out';
+            }, 500);
+        });
     </script>
 </body>
 </html>
