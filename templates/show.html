@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscribe to Unlock - Premium Experience</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="//cdn.runative-syndicate.com/sdk/v1/bi.js" data-ts-spot="8210a6e1d1fe47d789cb04224557d284" data-ts-width="250" data-ts-height="150"  async defer></script>
     <style>
         * {
             margin: 0;
@@ -792,165 +791,148 @@
     </div>
 
     <script>
-        class SubscribeUnlock {
-            constructor() {
-                this.subscribed = false;
-                this.liked = false;
-                this.subCounter = 5;
-                this.likeCounter = 5;
-                this.tabVisible = true;
-                this.subInterval = null;
-                this.likeInterval = null;
+    class SubscribeUnlock {
+        constructor() {
+            this.subscribed = false;
+            this.liked = false;
+            this.subCounter = 5;
+            this.likeCounter = 5;
+            this.tabVisible = true;
+            this.subInterval = null;
+            this.likeInterval = null;
 
-                this.elements = {
-                    subscribeCard: document.getElementById('subscribeCard'),
-                    likeCard: document.getElementById('likeCard'),
-                    subscribeStatus: document.getElementById('subscribeStatus'),
-                    likeStatus: document.getElementById('likeStatus'),
-                    unlockButton: document.getElementById('unlockButton'),
-                    successPopup: document.getElementById('successPopup'),
-                    successMessage: document.getElementById('successMessage'),
-                    statusDot: document.getElementById('statusDot'),
-                    statusText: document.getElementById('statusText'),
-                    progressFill: document.getElementById('progressFill'),
-                    progressPercentage: document.getElementById('progressPercentage')
-                };
+            this.elements = {
+                subscribeCard: document.getElementById('subscribeCard'),
+                likeCard: document.getElementById('likeCard'),
+                subscribeStatus: document.getElementById('subscribeStatus'),
+                likeStatus: document.getElementById('likeStatus'),
+                unlockButton: document.getElementById('unlockButton'),
+                successPopup: document.getElementById('successPopup'),
+                successMessage: document.getElementById('successMessage'),
+                statusDot: document.getElementById('statusDot'),
+                statusText: document.getElementById('statusText'),
+                progressFill: document.getElementById('progressFill'),
+                progressPercentage: document.getElementById('progressPercentage')
+            };
 
-                this.init();
-            }
+            this.init();
+        }
 
-            init() {
-                this.bindEvents();
-                this.updateProgress();
-            }
+        init() {
+            this.bindEvents();
+            this.updateProgress();
+        }
 
-            bindEvents() {
-                document.addEventListener('visibilitychange', () => {
-                    this.tabVisible = !document.hidden;
-                });
+        bindEvents() {
+            document.addEventListener('visibilitychange', () => {
+                this.tabVisible = !document.hidden;
+            });
 
-                this.elements.subscribeCard.addEventListener('click', () => this.handleSubscribe());
-                this.elements.likeCard.addEventListener('click', () => this.handleLike());
+            this.elements.subscribeCard.addEventListener('click', () => this.handleSubscribe());
+            this.elements.likeCard.addEventListener('click', () => this.handleLike());
 
-                this.elements.unlockButton.addEventListener('click', (e) => {
-                    if (!this.elements.unlockButton.disabled) {
-                        this.handleUnlock(e);
-                    }
-                });
-            }
-
-            showSuccess(message = 'Action Completed!') {
-                this.elements.successMessage.textContent = message;
-                this.elements.successPopup.classList.add('show');
-                setTimeout(() => {
-                    this.elements.successPopup.classList.remove('show');
-                }, 2500);
-            }
-
-            updateProgress() {
-                const completed = (this.subscribed ? 1 : 0) + (this.liked ? 1 : 0);
-                const percentage = (completed / 2) * 100;
-
-                this.elements.progressFill.style.width = `${percentage}%`;
-                this.elements.progressPercentage.textContent = `${percentage}%`;
-
-                if (completed === 0) {
-                    this.elements.statusText.textContent = 'Waiting for actions';
-                } else if (completed === 1) {
-                    this.elements.statusText.textContent = 'Half complete';
-                } else {
-                    this.elements.statusText.textContent = 'Ready to unlock';
-                    this.elements.statusDot.classList.add('active');
+            this.elements.unlockButton.addEventListener('click', (e) => {
+                if (!this.elements.unlockButton.disabled) {
+                    this.handleUnlock(e);
                 }
-            }
+            });
+        }
 
-            handleSubscribe() {
-                if (this.subscribed) return;
+        showSuccess(message = 'Action Completed!') {
+            this.elements.successMessage.textContent = message;
+            this.elements.successPopup.classList.add('show');
+            setTimeout(() => {
+                this.elements.successPopup.classList.remove('show');
+            }, 2500);
+        }
 
-                window.open("{{ data.channel }}", "_blank");
-                this.elements.subscribeCard.classList.remove('pending');
-                this.elements.subscribeCard.classList.add('processing');
-                this.elements.subscribeStatus.textContent = `Subscribing...`;
+        updateProgress() {
+            const completed = (this.subscribed ? 1 : 0) + (this.liked ? 1 : 0);
+            const percentage = (completed / 2) * 100;
 
-                this.subInterval = setInterval(() => {
-                    if (!this.tabVisible) {
-                        this.subCounter--;
-                        if (this.subCounter <= 0) {
-                            clearInterval(this.subInterval);
-                            this.subscribed = true;
-                            this.elements.subscribeCard.classList.remove('processing');
-                            this.elements.subscribeCard.classList.add('complete');
-                            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
-                            this.showSuccess('Successfully subscribed!');
-                            this.checkUnlockProgress();
-                            this.updateProgress();
-                        }
-                    }
-                }, 1000);
-            }
+            this.elements.progressFill.style.width = `${percentage}%`;
+            this.elements.progressPercentage.textContent = `${percentage}%`;
 
-            handleLike() {
-                if (this.liked) return;
-
-                window.open("{{ data.video }}", "_blank");
-                this.elements.likeCard.classList.remove('pending');
-                this.elements.likeCard.classList.add('processing');
-                this.elements.likeStatus.textContent = `Liking...`;
-
-                this.likeInterval = setInterval(() => {
-                    if (!this.tabVisible) {
-                        this.likeCounter--;
-                        if (this.likeCounter <= 0) {
-                            clearInterval(this.likeInterval);
-                            this.liked = true;
-                            this.elements.likeCard.classList.remove('processing');
-                            this.elements.likeCard.classList.add('complete');
-                            this.elements.likeStatus.textContent = 'Liked! ✓';
-                            this.showSuccess('Video liked!');
-                            this.checkUnlockProgress();
-                            this.updateProgress();
-                        }
-                    }
-                }, 1000);
-            }
-
-            handleUnlock(e) {
-                e.preventDefault();
-                this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
-                setTimeout(() => {
-                    document.getElementById('rewardForm').submit();
-                }, 2000);
+            if (completed === 0) {
+                this.elements.statusText.textContent = 'Waiting for actions';
+            } else if (completed === 1) {
+                this.elements.statusText.textContent = 'Half complete';
+            } else {
+                this.elements.statusText.textContent = 'Ready to unlock';
+                this.elements.statusDot.classList.add('active');
             }
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            new SubscribeUnlock();
-        });
+        checkUnlockProgress() {
+            if (this.subscribed && this.liked) {
+                this.elements.unlockButton.disabled = false;
+                this.elements.unlockButton.classList.remove('disabled');
+                this.elements.unlockButton.classList.add('active');
+            }
+        }
 
-                        }
-                    }
-                }, 1000);
-            }
+        handleSubscribe() {
+            if (this.subscribed) return;
 
-            handleUnlock(e) {
-                e.preventDefault();
-                this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
-                setTimeout(() => {
-                    document.getElementById('rewardForm').submit();
-                }, 2000);
-            }
+            window.open("{{ data.channel }}", "_blank");
+            this.elements.subscribeCard.classList.remove('pending');
+            this.elements.subscribeCard.classList.add('processing');
+            this.elements.subscribeStatus.textContent = `Subscribing...`;
 
-                      checkUnlockProgress() {
-    if (this.subscribed && this.liked) {
-        this.elements.unlockButton.disabled = false;
-        this.elements.unlockButton.classList.remove('disabled'); // <-- important
-        this.elements.unlockButton.classList.add('active');
+            this.subInterval = setInterval(() => {
+                if (!this.tabVisible) {
+                    this.subCounter--;
+                    if (this.subCounter <= 0) {
+                        clearInterval(this.subInterval);
+                        this.subscribed = true;
+                        this.elements.subscribeCard.classList.remove('processing');
+                        this.elements.subscribeCard.classList.add('complete');
+                        this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
+                        this.showSuccess('Successfully subscribed!');
+                        this.checkUnlockProgress();
+                        this.updateProgress();
+                    }
+                }
+            }, 1000);
+        }
+
+        handleLike() {
+            if (this.liked) return;
+
+            window.open("{{ data.video }}", "_blank");
+            this.elements.likeCard.classList.remove('pending');
+            this.elements.likeCard.classList.add('processing');
+            this.elements.likeStatus.textContent = `Liking...`;
+
+            this.likeInterval = setInterval(() => {
+                if (!this.tabVisible) {
+                    this.likeCounter--;
+                    if (this.likeCounter <= 0) {
+                        clearInterval(this.likeInterval);
+                        this.liked = true;
+                        this.elements.likeCard.classList.remove('processing');
+                        this.elements.likeCard.classList.add('complete');
+                        this.elements.likeStatus.textContent = 'Liked! ✓';
+                        this.showSuccess('Video liked!');
+                        this.checkUnlockProgress();
+                        this.updateProgress();
+                    }
+                }
+            }, 1000);
+        }
+
+        handleUnlock(e) {
+            e.preventDefault();
+            this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
+            setTimeout(() => {
+                document.getElementById('rewardForm').submit();
+            }, 2000);
+        }
     }
-}
 
-     document.addEventListener('DOMContentLoaded', () => {
-            new SubscribeUnlock();
-        });
-    </script>
+    document.addEventListener('DOMContentLoaded', () => {
+        new SubscribeUnlock();
+    });
+</script>
 </body>
-</html>html>
+<\html>
