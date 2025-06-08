@@ -875,8 +875,7 @@
     this.elements.subscribeStatus.textContent = `Subscribing...`;
 
     this.subInterval = setInterval(() => {
-        if (this.tabVisible) return; // only countdown when NOT on tab
-
+    if (!this.tabVisible) { // countdown only when not on tab
         this.subCounter--;
         if (this.subCounter <= 0) {
             clearInterval(this.subInterval);
@@ -888,8 +887,9 @@
             this.checkUnlockProgress();
             this.updateProgress();
         }
-    }, 1000);
-},
+    }
+}, 1000);
+
 
 handleLike() {
     if (this.liked) return;
@@ -902,8 +902,7 @@ handleLike() {
     this.elements.likeStatus.textContent = `Liking...`;
 
     this.likeInterval = setInterval(() => {
-        if (this.tabVisible) return; // only countdown when NOT on tab
-
+    if (!this.tabVisible) { // countdown only when not on tab
         this.likeCounter--;
         if (this.likeCounter <= 0) {
             clearInterval(this.likeInterval);
@@ -916,9 +915,8 @@ handleLike() {
             this.checkUnlockProgress();
             this.updateProgress();
         }
-    }, 1000);
-},
-
+    }
+}, 1000);
 
 handleUnlock(e) {
     e.preventDefault();
