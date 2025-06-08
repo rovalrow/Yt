@@ -754,35 +754,36 @@
             </div>
             
             <div class="actions-grid">
-    <div id="subscribeCard" class="action-card pending" onclick="window.open('{{ data.channel }}', '_blank')">
-        <div class="action-icon subscribe-icon"></div>
-        <div class="action-title">Subscribe to Channel</div>
-        <div class="action-status" id="subscribeStatus">Click to subscribe</div>
-    </div>
-    
-    <div id="likeCard" class="action-card pending" onclick="window.open('{{ data.video }}', '_blank')">
-        <div class="action-icon like-icon"></div>
-        <div class="action-title">Like This Video</div>
-        <div class="action-status" id="likeStatus">Click to like</div>
-    </div>
-</div>
-
-        <div class="progress-container">
-            <div class="progress-header">
-                <span class="progress-label">Completion Progress</span>
-                <span class="progress-percentage" id="progressPercentage">0%</span>
+                <div id="subscribeCard" class="action-card pending" onclick="window.open('{{ data.channel }}', '_blank')">
+                    <div class="action-icon subscribe-icon"></div>
+                    <div class="action-title">Subscribe to Channel</div>
+                    <div class="action-status" id="subscribeStatus">Click to subscribe</div>
+                </div>
+                
+                <div id="likeCard" class="action-card pending" onclick="window.open('{{ data.video }}', '_blank')">
+                    <div class="action-icon like-icon"></div>
+                    <div class="action-title">Like This Video</div>
+                    <div class="action-status" id="likeStatus">Click to like</div>
+                </div>
             </div>
-            <div class="progress-bar">
-                <div class="progress-fill" id="progressFill"></div>
-            </div>
-        </div>
 
-        <div class="unlock-section">
-            <form id="rewardForm" action="/unlock" method="POST">
-                <button id="unlockButton" class="unlock-button" type="submit" disabled>
-                    🎁 Unlock Your Rewards
-                </button>
-            </form>
+            <div class="progress-container">
+                <div class="progress-header">
+                    <span class="progress-label">Completion Progress</span>
+                    <span class="progress-percentage" id="progressPercentage">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="unlock-section">
+                <form id="rewardForm" action="/unlock" method="POST">
+                    <button id="unlockButton" class="unlock-button" type="submit" disabled>
+                        🎁 Unlock Your Rewards
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
@@ -864,74 +865,72 @@
                 }
             }
 
-  handleSubscribe() {
-    if (this.subscribed) return;
+            handleSubscribe() {
+                if (this.subscribed) return;
+                window.open("{{ data.channel }}", "_blank");
+                this.elements.subscribeCard.classList.remove('pending');
+                this.elements.subscribeCard.classList.add('processing');
+                this.elements.subscribeStatus.textContent = `Subscribing...`;
 
-    // Redirect to YouTube channel
-    window.open("{{ data.channel }}", "_blank");
+                this.subInterval = setInterval(() => {
+                    if (!this.tabVisible) {
+                        this.subCounter--;
+                        if (this.subCounter <= 0) {
+                            clearInterval(this.subInterval);
+                            this.subscribed = true;
+                            this.elements.subscribeCard.classList.remove('processing');
+                            this.elements.subscribeCard.classList.add('complete');
+                            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
+                            this.showSuccess('Successfully subscribed!');
+                            this.checkUnlockProgress();
+                            this.updateProgress();
+                        }
+                    }
+                }, 1000);
+            }
 
-    this.elements.subscribeCard.classList.remove('pending');
-    this.elements.subscribeCard.classList.add('processing');
-    this.elements.subscribeStatus.textContent = `Subscribing...`;
+            handleLike() {
+                if (this.liked) return;
+                window.open("{{ data.video }}", "_blank");
+                this.elements.likeCard.classList.remove('pending');
+                this.elements.likeCard.classList.add('processing');
+                this.elements.likeStatus.textContent = `Liking...`;
 
-    this.subInterval = setInterval(() => {
-    if (!this.tabVisible) { // countdown only when not on tab
-        this.subCounter--;
-        if (this.subCounter <= 0) {
-            clearInterval(this.subInterval);
-            this.subscribed = true;
-            this.elements.subscribeCard.classList.remove('processing');
-            this.elements.subscribeCard.classList.add('complete');
-            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
-            this.showSuccess('Successfully subscribed!');
-            this.checkUnlockProgress();
-            this.updateProgress();
+                this.likeInterval = setInterval(() => {
+                    if (!this.tabVisible) {
+                        this.likeCounter--;
+                        if (this.likeCounter <= 0) {
+                            clearInterval(this.likeInterval);
+                            this.liked = true;
+                            this.elements.likeCard.classList.remove('processing');
+                            this.elements.likeCard.classList.add('complete');
+                            this.elements.likeCard.querySelector('.like-icon').classList.add('complete');
+                            this.elements.likeStatus.textContent = 'Liked! ✓';
+                            this.showSuccess('Video liked!');
+                            this.checkUnlockProgress();
+                            this.updateProgress();
+                        }
+                    }
+                }, 1000);
+            }
+
+            handleUnlock(e) {
+                e.preventDefault();
+                this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
+                setTimeout(() => {
+                    document.getElementById('rewardForm').submit();
+                }, 2000);
+            }
+
+            checkUnlockProgress() {
+                if (this.subscribed && this.liked) {
+                    this.elements.unlockButton.disabled = false;
+                }
+            }
         }
-    }
-}, 1000);
 
-
-handleLike() {
-    if (this.liked) return;
-
-    // Redirect to YouTube video
-    window.open("{{ data.video }}", "_blank");
-
-    this.elements.likeCard.classList.remove('pending');
-    this.elements.likeCard.classList.add('processing');
-    this.elements.likeStatus.textContent = `Liking...`;
-
-    this.likeInterval = setInterval(() => {
-    if (!this.tabVisible) { // countdown only when not on tab
-        this.likeCounter--;
-        if (this.likeCounter <= 0) {
-            clearInterval(this.likeInterval);
-            this.liked = true;
-            this.elements.likeCard.classList.remove('processing');
-            this.elements.likeCard.classList.add('complete');
-            this.elements.likeCard.querySelector('.like-icon').classList.add('complete');
-            this.elements.likeStatus.textContent = 'Liked! ✓';
-            this.showSuccess('Video liked!');
-            this.checkUnlockProgress();
-            this.updateProgress();
-        }
-    }
-}, 1000);
-
-handleUnlock(e) {
-    e.preventDefault();
-    this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
-    
-    setTimeout(() => {
-        document.getElementById('rewardForm').submit();
-    }, 2000);
-}
-        }
-        
-        // Initialize the app when DOM is loaded
         document.addEventListener('DOMContentLoaded', () => {
             new SubscribeUnlock();
         });
     </script>
 </body>
-</html>
