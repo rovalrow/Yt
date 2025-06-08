@@ -744,14 +744,16 @@
 
         <div class="header">
             <h1>Subscribe & Like to Unlock</h1>
-            <p class="subtitle">Complete the required actions below to unlock your exclusive rewards and premium content</p>
+            <p class="subtitle">
+                Complete the required actions below to unlock your exclusive rewards and premium content
+            </p>
         </div>
 
-<div class="video-section">
-    <div class="video-container">
-        <iframe id="randomVideo" allowfullscreen></iframe>
-    </div>
-</div>
+        <div class="video-section">
+            <div class="video-container">
+                <iframe id="randomVideo" allowfullscreen></iframe>
+            </div>
+        </div>
 
         <div class="actions-section">
             <div class="actions-header">
@@ -782,10 +784,10 @@
                     <div class="progress-fill" id="progressFill"></div>
                 </div>
             </div>
-            
+
             <div class="unlock-section">
                 <form id="rewardForm" action="/unlock" method="POST">
-                <input type="hidden" name="link_id" value="{{ data.id }}">
+                    <input type="hidden" name="link_id" value="{{ data.id }}">
                     <button id="unlockButton" class="unlock-button" type="submit" disabled>
                         🎁 Unlock Your Rewards
                     </button>
@@ -830,17 +832,17 @@
             init() {
                 this.bindEvents();
                 this.updateProgress();
-            }
 
                 const videos = [
-        "https://www.youtube.com/embed/4InLtoAxdVo",
-        "https://www.youtube.com/embed/dQw4w9WgXcQ",
-        "https://www.youtube.com/embed/3JZ_D3ELwOQ"
-    ];
+                    "https://www.youtube.com/embed/4InLtoAxdVo",
+                    "https://www.youtube.com/embed/rY4OaiNEBJg",
+                    "https://www.youtube.com/embed/Bg3U0mOo7U8"
+                ];
 
-    const randomIndex = Math.floor(Math.random() * videos.length);
-    document.getElementById("randomVideo").src = videos[randomIndex];
-            
+                const randomIndex = Math.floor(Math.random() * videos.length);
+                document.getElementById("randomVideo").src = videos[randomIndex];
+            }
+
             bindEvents() {
                 document.addEventListener('visibilitychange', () => {
                     this.tabVisible = !document.hidden;
@@ -881,72 +883,72 @@
                 }
             }
 
-handleSubscribe() {
-    if (this.subscribed) return;
+            handleSubscribe() {
+                if (this.subscribed) return;
 
-    this.elements.subscribeCard.classList.remove('pending');
-    this.elements.subscribeCard.classList.add('processing');
-    this.elements.subscribeStatus.textContent = `Subscribing...`;
+                this.elements.subscribeCard.classList.remove('pending');
+                this.elements.subscribeCard.classList.add('processing');
+                this.elements.subscribeStatus.textContent = `Subscribing...`;
 
-    this.subCounter = 8;
-    clearInterval(this.subInterval);
-    this.subInterval = setInterval(() => {
-        if (!document.hidden) return; // Pause if tab is visible
+                this.subCounter = 8;
+                clearInterval(this.subInterval);
+                this.subInterval = setInterval(() => {
+                    if (!document.hidden) return;
 
-        this.subCounter--;
-        this.elements.subscribeStatus.textContent = `Subscribing...`; // Hide countdown
+                    this.subCounter--;
+                    this.elements.subscribeStatus.textContent = `Subscribing...`;
 
-        if (this.subCounter <= 0) {
-            clearInterval(this.subInterval);
-            this.subscribed = true;
-            this.elements.subscribeCard.classList.remove('processing');
-            this.elements.subscribeCard.classList.add('complete');
-            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
-            this.showSuccess('Successfully subscribed!');
-            this.checkUnlockProgress();
-            this.updateProgress();
-        }
-    }, 1000);
-}
+                    if (this.subCounter <= 0) {
+                        clearInterval(this.subInterval);
+                        this.subscribed = true;
+                        this.elements.subscribeCard.classList.remove('processing');
+                        this.elements.subscribeCard.classList.add('complete');
+                        this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
+                        this.showSuccess('Successfully subscribed!');
+                        this.checkUnlockProgress();
+                        this.updateProgress();
+                    }
+                }, 1000);
+            }
 
-handleLike() {
-    if (this.liked) return;
+            handleLike() {
+                if (this.liked) return;
 
-    this.elements.likeCard.classList.remove('pending');
-    this.elements.likeCard.classList.add('processing');
-    this.elements.likeStatus.textContent = `Liking...`;
+                this.elements.likeCard.classList.remove('pending');
+                this.elements.likeCard.classList.add('processing');
+                this.elements.likeStatus.textContent = `Liking...`;
 
-    this.likeCounter = 8;
-    clearInterval(this.likeInterval);
-    this.likeInterval = setInterval(() => {
-        if (!document.hidden) return; // Pause if tab is visible
+                this.likeCounter = 8;
+                clearInterval(this.likeInterval);
+                this.likeInterval = setInterval(() => {
+                    if (!document.hidden) return;
 
-        this.likeCounter--;
-        this.elements.likeStatus.textContent = `Liking...`; // Hide countdown
+                    this.likeCounter--;
+                    this.elements.likeStatus.textContent = `Liking...`;
 
-        if (this.likeCounter <= 0) {
-            clearInterval(this.likeInterval);
-            this.liked = true;
-            this.elements.likeCard.classList.remove('processing');
-            this.elements.likeCard.classList.add('complete');
-            this.elements.likeStatus.textContent = 'Liked! ✓';
-            this.showSuccess('Video liked!');
-            this.checkUnlockProgress();
-            this.updateProgress();
-        }
-    }, 1000);
-}
+                    if (this.likeCounter <= 0) {
+                        clearInterval(this.likeInterval);
+                        this.liked = true;
+                        this.elements.likeCard.classList.remove('processing');
+                        this.elements.likeCard.classList.add('complete');
+                        this.elements.likeStatus.textContent = 'Liked! ✓';
+                        this.showSuccess('Video liked!');
+                        this.checkUnlockProgress();
+                        this.updateProgress();
+                    }
+                }, 1000);
+            }
 
-checkUnlockProgress() {
-    if (this.subscribed && this.liked) {
-        console.log('Both actions complete. Enabling unlock button.');
-        this.elements.unlockButton.disabled = false;
-        this.elements.unlockButton.removeAttribute('disabled');
-        this.elements.unlockButton.classList.remove('disabled', 'active'); // Clean up old classes
-        this.elements.unlockButton.classList.add('enabled');
-    }
-}
-            
+            checkUnlockProgress() {
+                if (this.subscribed && this.liked) {
+                    console.log('Both actions complete. Enabling unlock button.');
+                    this.elements.unlockButton.disabled = false;
+                    this.elements.unlockButton.removeAttribute('disabled');
+                    this.elements.unlockButton.classList.remove('disabled', 'active');
+                    this.elements.unlockButton.classList.add('enabled');
+                }
+            }
+
             handleUnlock(e) {
                 e.preventDefault();
                 this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
