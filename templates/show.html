@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subscribe to Unlock</title>
+    <title>Subscribe to Unlock - Premium Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -11,126 +12,284 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
-            min-height: 100vh;
-            color: white;
-            overflow-x: hidden;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --error-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.18);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.75);
+            --text-muted: rgba(255, 255, 255, 0.5);
         }
 
-        .background-grid {
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            min-height: 100vh;
+            color: var(--text-primary);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Animated background */
+        .background-effects {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            opacity: 0.03;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floating-orbs {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: float 20s infinite linear;
+        }
+
+        .orb:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .orb:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            top: 60%;
+            right: 15%;
+            animation-delay: -7s;
+        }
+
+        .orb:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            bottom: 30%;
+            left: 20%;
+            animation-delay: -14s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(15px) rotate(240deg); }
+        }
+
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.02;
             background-image: 
                 linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            z-index: 0;
+            background-size: 60px 60px;
+            animation: gridMove 30s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 900px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 20px 20px 60px;
             text-align: center;
         }
 
+        /* Navigation */
         .top-nav {
             display: flex;
-            justify-content: flex-start;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 40px;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            animation: slideInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .home-button {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            background: rgba(255, 255, 255, 0.05);
+            gap: 10px;
+            padding: 14px 28px;
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 12px;
-            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            color: var(--text-primary);
             text-decoration: none;
             font-weight: 500;
             font-size: 0.95rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.6s;
+        }
+
+        .home-button:hover::before {
+            left: 100%;
         }
 
         .home-button:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            color: white;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
         }
 
         .home-icon {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             background: currentColor;
             mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2'%3E%3Cpath d='M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6'/%3E%3C/svg%3E") no-repeat center;
             mask-size: contain;
         }
 
-        .header {
-            margin-bottom: 60px;
-            animation: fadeInUp 0.8s ease-out;
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #ff6b6b;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.active {
+            background: #51cf66;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 80px;
+            animation: slideInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         h1 {
-            font-size: 4rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 24px;
+            background: var(--primary-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
+            line-height: 1.1;
+            position: relative;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--primary-gradient);
+            border-radius: 2px;
+            animation: expand 1s ease-out 0.5s both;
+        }
+
+        @keyframes expand {
+            from { width: 0; }
+            to { width: 100px; }
         }
 
         .subtitle {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.3rem;
+            color: var(--text-secondary);
             font-weight: 400;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Video Section */
+        .video-section {
+            margin: 60px auto;
+            animation: scaleIn 1s cubic-bezier(0.4, 0, 0.2, 1) 0.2s both;
         }
 
         .video-container {
             position: relative;
-            margin: 50px auto;
-            max-width: 720px;
-            background: rgba(255, 255, 255, 0.05);
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
             border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
             overflow: hidden;
-            animation: slideUp 1s ease-out 0.2s both;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             aspect-ratio: 16/9;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
         }
 
         .video-container:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .video-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .video-container:hover::before {
+            opacity: 1;
         }
 
         iframe {
@@ -138,33 +297,50 @@
             height: 100%;
             border: none;
             display: block;
+            border-radius: 24px;
+        }
+
+        /* Actions Grid */
+        .actions-section {
+            margin: 80px auto 0;
+            animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.4s both;
+        }
+
+        .actions-header {
+            margin-bottom: 40px;
+        }
+
+        .actions-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+        }
+
+        .actions-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
         }
 
         .actions-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            max-width: 600px;
-            margin: 50px auto 0;
-            animation: fadeIn 1s ease-out 0.4s both;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 700px;
+            margin: 0 auto;
         }
 
         .action-card {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--glass-bg);
             backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
+            border: 2px solid var(--glass-border);
+            border-radius: 24px;
             padding: 32px 28px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
         }
 
         .action-card::before {
@@ -174,7 +350,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
             transition: left 0.8s;
         }
 
@@ -183,114 +359,212 @@
         }
 
         .action-card.pending {
-            border-color: rgba(255, 107, 107, 0.5);
-            background: rgba(255, 107, 107, 0.08);
-            box-shadow: 0 8px 32px rgba(255, 107, 107, 0.15);
+            border-color: rgba(255, 107, 107, 0.4);
+            background: rgba(255, 107, 107, 0.06);
         }
 
         .action-card.pending:hover {
-            transform: translateY(-3px);
-            border-color: rgba(255, 107, 107, 0.7);
-            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.25);
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(255, 107, 107, 0.6);
+            box-shadow: 0 25px 60px rgba(255, 107, 107, 0.2);
         }
 
         .action-card.complete {
-            border-color: rgba(39, 174, 96, 0.6);
-            background: rgba(39, 174, 96, 0.12);
+            border-color: rgba(81, 207, 102, 0.6);
+            background: rgba(81, 207, 102, 0.1);
             transform: scale(1.02);
-            box-shadow: 0 12px 36px rgba(39, 174, 96, 0.2);
+            box-shadow: 0 20px 50px rgba(81, 207, 102, 0.2);
         }
 
         .action-card.complete:hover {
-            transform: scale(1.02) translateY(-2px);
+            transform: scale(1.02) translateY(-4px);
+        }
+
+        .action-card.processing {
+            border-color: rgba(102, 126, 234, 0.6);
+            background: rgba(102, 126, 234, 0.1);
+            animation: processingPulse 2s infinite;
+        }
+
+        @keyframes processingPulse {
+            0%, 100% { box-shadow: 0 12px 40px rgba(102, 126, 234, 0.15); }
+            50% { box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3); }
         }
 
         .action-icon {
-            width: 48px;
-            height: 48px;
-            margin: 0 auto 16px;
-            border-radius: 12px;
+            width: 56px;
+            height: 56px;
+            margin: 0 auto 20px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            position: relative;
         }
 
         .subscribe-icon {
             background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
         }
 
         .like-icon {
             background: linear-gradient(135deg, #4ecdc4, #44a08d);
+            box-shadow: 0 8px 24px rgba(78, 205, 196, 0.3);
         }
 
         .action-icon::after {
             font-size: 20px;
             font-weight: 600;
+            color: white;
         }
 
         .subscribe-icon::after {
             content: 'SUB';
-            font-size: 12px;
-            color: white;
-            font-weight: 700;
+            font-size: 14px;
+            font-weight: 800;
         }
 
         .like-icon::after {
             content: '♡';
-            font-size: 24px;
-            color: white;
+            font-size: 28px;
         }
 
         .like-icon.complete::after {
             content: '♥';
+            animation: heartBeat 0.6s ease-in-out;
+        }
+
+        @keyframes heartBeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
         }
 
         .action-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--text-primary);
         }
 
         .action-status {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 500;
         }
 
         .complete .action-status {
-            color: rgba(39, 174, 96, 0.9);
+            color: rgba(81, 207, 102, 0.9);
+            font-weight: 600;
         }
 
+        .processing .action-status {
+            color: rgba(102, 126, 234, 0.9);
+            font-weight: 600;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin: 60px auto 40px;
+            max-width: 500px;
+            animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s both;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-label {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .progress-percentage {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-gradient);
+            border-radius: 4px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            width: 0%;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Unlock Section */
         .unlock-section {
-            margin-top: 60px;
-            animation: fadeIn 1s ease-out 0.6s both;
+            margin-top: 80px;
+            animation: slideInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.8s both;
         }
 
         .unlock-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--primary-gradient);
             color: white;
             border: none;
-            padding: 20px 48px;
-            font-size: 1.2rem;
-            font-weight: 600;
-            border-radius: 16px;
+            padding: 22px 50px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
             opacity: 0.5;
             pointer-events: none;
+            box-shadow: 0 12px 40px rgba(102, 126, 234, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .unlock-button.enabled {
             opacity: 1;
             pointer-events: auto;
-            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
+            animation: readyPulse 2s infinite;
+        }
+
+        @keyframes readyPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
         }
 
         .unlock-button.enabled:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 25px 50px rgba(102, 126, 234, 0.4);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 30px 80px rgba(102, 126, 234, 0.5);
         }
 
         .unlock-button::before {
@@ -308,18 +582,20 @@
             left: 100%;
         }
 
+        /* Success Popup */
         .success-popup {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
-            background: rgba(39, 174, 96, 0.95);
+            background: rgba(81, 207, 102, 0.95);
             backdrop-filter: blur(20px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 2px solid rgba(39, 174, 96, 0.5);
+            padding: 40px;
+            border-radius: 24px;
+            border: 2px solid rgba(81, 207, 102, 0.5);
             z-index: 1000;
-            transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 30px 80px rgba(81, 207, 102, 0.3);
         }
 
         .success-popup.show {
@@ -327,88 +603,184 @@
         }
 
         .success-icon {
-            width: 60px;
-            height: 60px;
-            margin: 0 auto 16px;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
             background: white;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #27ae60;
-            font-size: 24px;
+            color: #51cf66;
+            font-size: 32px;
             font-weight: bold;
+            animation: successBounce 0.6s ease-out;
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
         }
 
         .success-icon::after {
             content: '✓';
         }
 
+        .success-message {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            text-align: center;
+        }
+
+        /* Animations */
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 16px 40px;
             }
             
+            .top-nav {
+                flex-direction: column;
+                gap: 16px;
+                align-items: stretch;
+            }
+            
             h1 {
-                font-size: 2.8rem;
+                font-size: 3rem;
+                letter-spacing: -2px;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
             }
             
             .actions-grid {
                 grid-template-columns: 1fr;
-                gap: 16px;
-            }
-            
-            .video-header {
-                padding: 20px 24px;
+                gap: 20px;
+                max-width: 400px;
             }
             
             .unlock-button {
-                padding: 18px 36px;
+                padding: 20px 40px;
                 font-size: 1.1rem;
+            }
+            
+            .video-container {
+                border-radius: 20px;
+            }
+            
+            .action-card {
+                padding: 28px 24px;
+                border-radius: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .home-button {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .action-card {
+                padding: 24px 20px;
+            }
+            
+            .unlock-button {
+                padding: 18px 32px;
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="background-grid"></div>
+    <div class="background-effects">
+        <div class="floating-orbs">
+            <div class="orb"></div>
+            <div class="orb"></div>
+            <div class="orb"></div>
+        </div>
+        <div class="grid-overlay"></div>
+    </div>
     
     <div class="container">
         <div class="top-nav">
-            <a href="" class="home-button">
+            <a href="/" class="home-button">
                 <div class="home-icon"></div>
                 Home
             </a>
+            <div class="status-indicator">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Waiting for actions</span>
+            </div>
         </div>
         
         <div class="header">
             <h1>Subscribe to Unlock</h1>
-            <p class="subtitle">Complete the actions below to access your rewards</p>
+            <p class="subtitle">Complete the required actions below to unlock your exclusive rewards and premium content</p>
         </div>
 
-  <div class="video-container">
-    <iframe src="https://www.youtube.com/embed/{{ data.video }}" allowfullscreen></iframe>
-</div>
+        <div class="video-section">
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            </div>
+        </div>
         
-        <div class="actions-grid">
-            <div id="subscribeCard" class="action-card pending">
-                <div class="action-icon subscribe-icon"></div>
-                <div class="action-title">Subscribe</div>
-                <div id="subscribeCard" class="action-card pending" onclick="window.open('{{ data.channel }}', '_blank')">
-                <div class="action-status" id="subscribeStatus">Click to subscribe</div>
+        <div class="actions-section">
+            <div class="actions-header">
+                <h2 class="actions-title">Required Actions</h2>
+                <p class="actions-subtitle">Complete both actions to proceed</p>
             </div>
             
-            <div id="likeCard" class="action-card pending">
-                <div class="action-icon like-icon"></div>
-                <div class="action-title">Like Video</div>
-                <div id="likeCard" class="action-card pending" onclick="window.open('{{ data.url }}', '_blank')">
-                <div class="action-status" id="likeStatus">Click to like</div>
+            <div class="actions-grid">
+                <div id="subscribeCard" class="action-card pending">
+                    <div class="action-icon subscribe-icon"></div>
+                    <div class="action-title">Subscribe to Channel</div>
+                    <div class="action-status" id="subscribeStatus">Click to subscribe</div>
+                </div>
+                
+                <div id="likeCard" class="action-card pending">
+                    <div class="action-icon like-icon"></div>
+                    <div class="action-title">Like This Video</div>
+                    <div class="action-status" id="likeStatus">Click to like</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-header">
+                <span class="progress-label">Completion Progress</span>
+                <span class="progress-percentage" id="progressPercentage">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
             </div>
         </div>
 
         <div class="unlock-section">
-            <form id="rewardForm" action="/unlock">
-                <button id="unlockButton" class="unlock-button" disabled>
-                    Unlock Your Rewards
+            <form id="rewardForm" action="/unlock" method="POST">
+                <button id="unlockButton" class="unlock-button" type="submit" disabled>
+                    🎁 Unlock Your Rewards
                 </button>
             </form>
         </div>
@@ -416,83 +788,144 @@
 
     <div class="success-popup" id="successPopup">
         <div class="success-icon"></div>
-        <div style="font-weight: 600; font-size: 1.1rem;">Action Completed!</div>
+        <div class="success-message" id="successMessage">Action Completed!</div>
     </div>
 
     <script>
-        let subscribed = false;
-        let liked = false;
-        let subCounter = 5;
-        let likeCounter = 5;
-        let tabVisible = true;
-        
-        const subscribeCard = document.getElementById('subscribeCard');
-        const likeCard = document.getElementById('likeCard');
-        const subscribeStatus = document.getElementById('subscribeStatus');
-        const likeStatus = document.getElementById('likeStatus');
-        const unlockButton = document.getElementById('unlockButton');
-        const successPopup = document.getElementById('successPopup');
-        
-        let subInterval, likeInterval;
+        class SubscribeUnlock {
+            constructor() {
+                this.subscribed = false;
+                this.liked = false;
+                this.subCounter = 10;
+                this.likeCounter = 10;
+                this.tabVisible = true;
+                this.subInterval = null;
+                this.likeInterval = null;
+                
+                this.elements = {
+                    subscribeCard: document.getElementById('subscribeCard'),
+                    likeCard: document.getElementById('likeCard'),
+                    subscribeStatus: document.getElementById('subscribeStatus'),
+                    likeStatus: document.getElementById('likeStatus'),
+                    unlockButton: document.getElementById('unlockButton'),
+                    successPopup: document.getElementById('successPopup'),
+                    successMessage: document.getElementById('successMessage'),
+                    statusDot: document.getElementById('statusDot'),
+                    statusText: document.getElementById('statusText'),
+                    progressFill: document.getElementById('progressFill'),
+                    progressPercentage: document.getElementById('progressPercentage')
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.bindEvents();
+                this.updateProgress();
+            }
+            
+            bindEvents() {
+                document.addEventListener('visibilitychange', () => {
+                    this.tabVisible = !document.hidden;
+                });
+                
+                this.elements.subscribeCard.addEventListener('click', () => this.handleSubscribe());
+                this.elements.likeCard.addEventListener('click', () => this.handleLike());
+                
+                this.elements.unlockButton.addEventListener('click', (e) => {
+                    if (!this.elements.unlockButton.disabled) {
+                        this.handleUnlock(e);
+                    }
+                });
+            }
+            
+            showSuccess(message = 'Action Completed!') {
+                this.elements.successMessage.textContent = message;
+                this.elements.successPopup.classList.add('show');
+                setTimeout(() => {
+                    this.elements.successPopup.classList.remove('show');
+                }, 2500);
+            }
+            
+            updateProgress() {
+                const completed = (this.subscribed ? 1 : 0) + (this.liked ? 1 : 0);
+                const percentage = (completed / 2) * 100;
+                
+                this.elements.progressFill.style.width = `${percentage}%`;
+                this.elements.progressPercentage.textContent = `${percentage}%`;
+                
+                if (completed === 0) {
+                    this.elements.statusText.textContent = 'Waiting for actions';
+                } else if (completed === 1) {
+                    this.elements.statusText.textContent = 'Half complete';
+                } else {
+                    this.elements.statusText.textContent = 'Ready to unlock';
+                    this.elements.statusDot.classList.add('active');
+                }
+            }
 
-        document.addEventListener('visibilitychange', () => {
-            tabVisible = !document.hidden;
-        });
+  handleSubscribe() {
+    if (this.subscribed) return;
 
-        function showSuccess() {
-            successPopup.classList.add('show');
-            setTimeout(() => {
-                successPopup.classList.remove('show');
-            }, 2000);
+    this.elements.subscribeCard.classList.remove('pending');
+    this.elements.subscribeCard.classList.add('processing');
+    this.elements.subscribeStatus.textContent = `Subscribing...`;
+
+    this.subInterval = setInterval(() => {
+        if (this.tabVisible) return; // only countdown when NOT on tab
+
+        this.subCounter--;
+        // Don’t update the text to show countdown
+        if (this.subCounter <= 0) {
+            clearInterval(this.subInterval);
+            this.subscribed = true;
+            this.elements.subscribeCard.classList.remove('processing');
+            this.elements.subscribeCard.classList.add('complete');
+            this.elements.subscribeStatus.textContent = 'Subscribed! ✓';
+            this.showSuccess('Successfully subscribed!');
+            this.checkUnlockProgress();
         }
+    }, 1000);
+}
 
-        function checkUnlockStatus() {
-            if (subscribed && liked) {
-                unlockButton.disabled = false;
-                unlockButton.classList.add('enabled');
-            }
+handleLike() {
+    if (this.liked) return;
+
+    this.elements.likeCard.classList.remove('pending');
+    this.elements.likeCard.classList.add('processing');
+    this.elements.likeStatus.textContent = `Liking...`;
+
+    this.likeInterval = setInterval(() => {
+        if (this.tabVisible) return; // only countdown when NOT on tab
+
+        this.likeCounter--;
+        // Don’t update the text to show countdown
+        if (this.likeCounter <= 0) {
+            clearInterval(this.likeInterval);
+            this.liked = true;
+            this.elements.likeCard.classList.remove('processing');
+            this.elements.likeCard.classList.add('complete');
+            this.elements.likeCard.querySelector('.like-icon').classList.add('complete');
+            this.elements.likeStatus.textContent = 'Liked! ✓';
+            this.showSuccess('Video liked!');
+            this.checkUnlockProgress();
         }
+    }, 1000);
+}
 
-        subscribeCard.addEventListener('click', () => {
-            if (!subscribed && !subInterval) {
-                subscribeStatus.textContent = 'Subscribing...';
-                subInterval = setInterval(() => {
-                    if (!tabVisible && subCounter > 0) {
-                        subCounter--;
-                    }
-                    if (subCounter <= 0) {
-                        clearInterval(subInterval);
-                        subscribed = true;
-                        subscribeCard.classList.remove('pending');
-                        subscribeCard.classList.add('complete');
-                        subscribeStatus.textContent = 'Subscribed successfully';
-                        showSuccess();
-                        checkUnlockStatus();
-                    }
-                }, 1000);
-            }
-        });
-
-        likeCard.addEventListener('click', () => {
-            if (!liked && !likeInterval) {
-                likeStatus.textContent = 'Liking...';
-                const likeIcon = likeCard.querySelector('.like-icon');
-                likeInterval = setInterval(() => {
-                    if (!tabVisible && likeCounter > 0) {
-                        likeCounter--;
-                    }
-                    if (likeCounter <= 0) {
-                        clearInterval(likeInterval);
-                        liked = true;
-                        likeCard.classList.remove('pending');
-                        likeCard.classList.add('complete');
-                        likeIcon.classList.add('complete');
-                        likeStatus.textContent = 'Liked successfully';
-                        showSuccess();
-                        checkUnlockStatus();
-                    }
-                }, 1000);
-            }
+handleUnlock(e) {
+    e.preventDefault();
+    this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
+    
+    setTimeout(() => {
+        document.getElementById('rewardForm').submit();
+    }, 2000);
+}
+        }
+        
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new SubscribeUnlock();
         });
     </script>
 </body>
