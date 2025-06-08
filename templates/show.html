@@ -849,21 +849,25 @@
             }
             
             updateProgress() {
-                const completed = (this.subscribed ? 1 : 0) + (this.liked ? 1 : 0);
-                const percentage = (completed / 2) * 100;
-                
-                this.elements.progressFill.style.width = `${percentage}%`;
-                this.elements.progressPercentage.textContent = `${percentage}%`;
-                
-                if (completed === 0) {
-                    this.elements.statusText.textContent = 'Waiting for actions';
-                } else if (completed === 1) {
-                    this.elements.statusText.textContent = 'Half complete';
-                } else {
-                    this.elements.statusText.textContent = 'Ready to unlock';
-                    this.elements.statusDot.classList.add('active');
-                }
-            }
+    const completed = (this.subscribed ? 1 : 0) + (this.liked ? 1 : 0);
+    const percentage = (completed / 2) * 100;
+    
+    this.elements.progressFill.style.width = `${percentage}%`;
+    this.elements.progressPercentage.textContent = `${percentage}%`;
+    
+    if (completed === 0) {
+        this.elements.statusText.textContent = 'Waiting for actions';
+        this.elements.statusDot.classList.remove('active');
+    } else if (completed === 1) {
+        this.elements.statusText.textContent = 'Half complete';
+        this.elements.statusDot.classList.remove('active');
+    } else {
+        this.elements.statusText.textContent = 'Ready to unlock';
+        this.elements.statusDot.classList.add('active');
+    }
+    
+    this.checkUnlockProgress();  // <-- Add this to sync unlock button
+}
 
             handleSubscribe() {
                 if (this.subscribed) return;
@@ -923,11 +927,12 @@
             }
 
             checkUnlockProgress() {
-                if (this.subscribed && this.liked) {
-                    this.elements.unlockButton.disabled = false;
-                }
-            }
-        }
+    if (this.subscribed && this.liked) {
+        this.elements.unlockButton.disabled = false;
+    } else {
+        this.elements.unlockButton.disabled = true;  // <-- Make sure to disable if not complete
+    }
+}
 
         document.addEventListener('DOMContentLoaded', () => {
             new SubscribeUnlock();
