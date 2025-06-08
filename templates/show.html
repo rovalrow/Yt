@@ -877,9 +877,10 @@ handleSubscribe() {
     this.subCounter = 5;
     clearInterval(this.subInterval);
     this.subInterval = setInterval(() => {
-        if (document.visibilityState === 'visible') return; // Wait until user is NOT viewing
+        if (!document.hidden) return; // Pause if tab is visible
 
         this.subCounter--;
+        this.elements.subscribeStatus.textContent = `Subscribing...`; // Hide countdown
 
         if (this.subCounter <= 0) {
             clearInterval(this.subInterval);
@@ -892,7 +893,7 @@ handleSubscribe() {
             this.updateProgress();
         }
     }, 1000);
-},
+}
 
 handleLike() {
     if (this.liked) return;
@@ -904,9 +905,10 @@ handleLike() {
     this.likeCounter = 5;
     clearInterval(this.likeInterval);
     this.likeInterval = setInterval(() => {
-        if (document.visibilityState === 'visible') return; // Wait until user is NOT viewing
+        if (!document.hidden) return; // Pause if tab is visible
 
         this.likeCounter--;
+        this.elements.likeStatus.textContent = `Liking...`; // Hide countdown
 
         if (this.likeCounter <= 0) {
             clearInterval(this.likeInterval);
