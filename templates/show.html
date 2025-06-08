@@ -915,11 +915,12 @@
             }
 
             checkUnlockProgress() {
-                if (this.subscribed && this.liked) {
-                    this.elements.unlockButton.disabled = false;
-                    this.elements.unlockButton.classList.add('active');
-                }
-            }
+    if (this.subscribed && this.liked) {
+        this.elements.unlockButton.disabled = false;
+        this.elements.unlockButton.classList.remove('disabled'); // <-- important
+        this.elements.unlockButton.classList.add('active');
+    }
+}
 
             handleUnlock(e) {
                 e.preventDefault();
