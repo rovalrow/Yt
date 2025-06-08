@@ -916,14 +916,16 @@
                 }, 1000);
             }
 
-            checkUnlockProgress() {
-                if (this.subscribed && this.liked) {
-                    this.elements.unlockButton.disabled = false;
-                    this.elements.unlockButton.classList.remove('disabled');
-                    this.elements.unlockButton.classList.add('active');
-                }
-            }
-
+checkUnlockProgress() {
+    if (this.subscribed && this.liked) {
+        console.log('Both actions complete. Enabling unlock button.');
+        this.elements.unlockButton.disabled = false;
+        this.elements.unlockButton.removeAttribute('disabled');
+        this.elements.unlockButton.classList.remove('disabled', 'active'); // Clean up old classes
+        this.elements.unlockButton.classList.add('enabled');
+    }
+}
+            
             handleUnlock(e) {
                 e.preventDefault();
                 this.showSuccess('🎁 Rewards Unlocked! Redirecting...');
