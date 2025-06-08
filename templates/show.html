@@ -747,11 +747,11 @@
             <p class="subtitle">Complete the required actions below to unlock your exclusive rewards and premium content</p>
         </div>
 
-        <div class="video-section">
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/4InLtoAxdVo" allowfullscreen></iframe>
-            </div>
-        </div>
+<div class="video-section">
+    <div class="video-container">
+        <iframe id="randomVideo" allowfullscreen></iframe>
+    </div>
+</div>
 
         <div class="actions-section">
             <div class="actions-header">
@@ -832,6 +832,15 @@
                 this.updateProgress();
             }
 
+                const videos = [
+        "https://www.youtube.com/embed/4InLtoAxdVo",
+        "https://www.youtube.com/embed/dQw4w9WgXcQ",
+        "https://www.youtube.com/embed/3JZ_D3ELwOQ"
+    ];
+
+    const randomIndex = Math.floor(Math.random() * videos.length);
+    document.getElementById("randomVideo").src = videos[randomIndex];
+            
             bindEvents() {
                 document.addEventListener('visibilitychange', () => {
                     this.tabVisible = !document.hidden;
