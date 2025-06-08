@@ -754,19 +754,18 @@
             </div>
             
             <div class="actions-grid">
-                <div id="subscribeCard" class="action-card pending">
-                    <div class="action-icon subscribe-icon"></div>
-                    <div class="action-title">Subscribe to Channel</div>
-                    <div class="action-status" id="subscribeStatus">Click to subscribe</div>
-                </div>
-                
-                <div id="likeCard" class="action-card pending">
-                    <div class="action-icon like-icon"></div>
-                    <div class="action-title">Like This Video</div>
-                    <div class="action-status" id="likeStatus">Click to like</div>
-                </div>
-            </div>
-        </div>
+    <div id="subscribeCard" class="action-card pending" onclick="window.open('{{ data.channel }}', '_blank')">
+        <div class="action-icon subscribe-icon"></div>
+        <div class="action-title">Subscribe to Channel</div>
+        <div class="action-status" id="subscribeStatus">Click to subscribe</div>
+    </div>
+    
+    <div id="likeCard" class="action-card pending" onclick="window.open('{{ data.video }}', '_blank')">
+        <div class="action-icon like-icon"></div>
+        <div class="action-title">Like This Video</div>
+        <div class="action-status" id="likeStatus">Click to like</div>
+    </div>
+</div>
 
         <div class="progress-container">
             <div class="progress-header">
