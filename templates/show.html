@@ -384,21 +384,23 @@
             <h1>Subscribe to Unlock</h1>
             <p class="subtitle">Complete the actions below to access your rewards</p>
         </div>
-        
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-        </div>
+
+  <div class="video-container">
+    <iframe src="https://www.youtube.com/embed/{{ data.video }}" allowfullscreen></iframe>
+</div>
         
         <div class="actions-grid">
             <div id="subscribeCard" class="action-card pending">
                 <div class="action-icon subscribe-icon"></div>
                 <div class="action-title">Subscribe</div>
+                <div id="subscribeCard" class="action-card pending" onclick="window.open('{{ data.channel }}', '_blank')">
                 <div class="action-status" id="subscribeStatus">Click to subscribe</div>
             </div>
             
             <div id="likeCard" class="action-card pending">
                 <div class="action-icon like-icon"></div>
                 <div class="action-title">Like Video</div>
+                <div id="likeCard" class="action-card pending" onclick="window.open('{{ data.url }}', '_blank')">
                 <div class="action-status" id="likeStatus">Click to like</div>
             </div>
         </div>
@@ -420,8 +422,8 @@
     <script>
         let subscribed = false;
         let liked = false;
-        let subCounter = 10;
-        let likeCounter = 10;
+        let subCounter = 5;
+        let likeCounter = 5;
         let tabVisible = true;
         
         const subscribeCard = document.getElementById('subscribeCard');
